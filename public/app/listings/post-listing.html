@@ -1,0 +1,16 @@
+<div class="container">
+	<div class="row">
+		<form action="/post-listing" method="post" enctype="multipart/form-data">
+			<div class="form-group">
+				<label for="title">Listing Title</label>
+				<input type="text" name="title" ng-model="listing.title" class="form-control">
+			</div>
+
+			<div class="form-group">
+				<label for="imgFile">Upload Image</label>
+				<input type="file" name="imgFile" file-model="listing.img">
+			</div>
+			<button type="submit" class="btn btn-primary">Post Listing</button>
+		</form>
+	</div>
+</div>
