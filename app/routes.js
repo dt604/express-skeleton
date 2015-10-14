@@ -1,88 +1,264 @@
 // app/routes.js
-
 var Upload = require('../config/multer');
+var Listings = require('./models/listings');
+var Buildings = require('./models/buildings');
+var Users = require('./models/users');
 
-module.exports = function(app, passport) {
+
+module.exports = function(app) {
 
     // =====================================
-    // Upload Files ========
+    // Login & Register ========
     // =====================================
-    app.post('/post-listing', Upload.array('imgFile', 12), function(req, res){
-        console.log(req.files);
-        console.log(req.body);
-        res.redirect('/');
+
+    //Register
+    app.post('/register', function(req, res){
+        var newUser = new Users(req.body);
+
+        newUser.save(function(err, doc){
+            res.send(doc);
+        });
     });
+    //Login
+    app.post('/login', function(req, res){
+        var email = req.body.email;
+        var password = req.body.password;
 
-    // =====================================
-    // HOME PAGE (with login links) ========
-    // =====================================
-    app.get('/', function(req, res) {
-        res.render('index'); // load the index.jade file
-    });
-
-    // =====================================
-    // LOGIN ===============================
-    // =====================================
-    // show the login form
-    app.get('/login', function(req, res) {
-
-        // render the page and pass in any flash data if it exists
-        res.render('login.jade', { message: req.flash('loginMessage') }); 
-    });
-
-    // process the login form
-    app.post('/login', passport.authenticate('local-login', {
-        successRedirect : '/profile', // redirect to the secure profile section
-        failureRedirect : '/login', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
-    }));
-
-
-    // =====================================
-    // SIGNUP ==============================
-    // =====================================
-    // show the signup form
-    app.get('/signup', function(req, res) {
-
-        // render the page and pass in any flash data if it exists
-        res.render('signup.jade', { message: req.flash('signupMessage') });
-    });
-
-    // process the signup form
-    app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect : '/profile', // redirect to the secure profile section
-        failureRedirect : '/signup', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
-    }));
-
-
-    // =====================================
-    // PROFILE SECTION =====================
-    // =====================================
-    // we will want this protected so you have to be logged in to visit
-    // we will use route middleware to verify this (the isLoggedIn function)
-    app.get('/profile', isLoggedIn, function(req, res) {
-        res.render('profile.jade', {
-            user : req.user // get the user out of session and pass to template
+        Users.findOne({"email": email}, function(err, doc){
+            if(password == doc.password){
+                res.send(doc)
+            }else{
+                res.send("Wrong password!");
+            }
         });
     });
 
     // =====================================
-    // LOGOUT ==============================
+    // Post Listing ========
     // =====================================
-    app.get('/logout', function(req, res) {
-        req.logout();
-        res.redirect('/');
+    app.post('/post-listing/:buildingID?/:available?', function(req, res){
+
+        var buildingID = req.params.buildingID;
+        var available = req.params.available;
+
+        if(available == 'yes'){
+            // Add to 'vacancies' Array
+            Buildings.findByIdAndUpdate(buildingID,
+                {$addToSet: {vacancies: req.body}},
+                    function(err, doc){
+                        if(err) console.log(err);
+                        
+                });  
+        }
+
+
+        // Add to 'units' Array
+        Buildings.findByIdAndUpdate(buildingID,
+                {$addToSet: {units: req.body}},
+                    function(err, doc){
+                        if(err) console.log(err);
+                        res.send(doc);
+        });
+
+        // res.redirect('/#/admin');
+
     });
+    
+    // =====================================
+    // Delete Listing  =======
+    // =====================================
+    app.get('/delete-listing/:buildID?/:aptID?/:aptIdx?/:available?', function(req, res){
+        var aptIdx = req.params.aptIdx;
+        var buildID = req.params.buildID;
+        var aptID = req.params.aptID;
+        var available = req.params.available;
+        
+
+        Buildings.findById(buildID, function(err, doc){
+            doc.units.splice(aptIdx, 1);
+
+            if(available == 'yes'){
+                Buildings.update({'_id': buildID}, {$pull: {
+                    'vacancies': {aptNum : aptID}
+                }}, function(err){
+                    if(err) console.log(err);
+                });
+            };
+
+            doc.save(function(err){
+                if(err){
+                    console.log(err);
+                }else {
+                    res.send(doc);
+                }
+            });
+        });
+
+    });
+
+
+    // =====================================
+    // Building ========
+    // =====================================
+
+    //Get buildings
+    app.get('/buildings', function(req, res){
+        Buildings.find(function(err, docs){
+            res.send(docs);
+        });
+    });
+
+    //Get Building
+    app.get('/building/:buildID?', function(req, res){
+        var buildID = req.params.buildID;
+        Buildings.findById(buildID, function(err, doc){
+            res.send(doc);
+        });
+    });
+    //Post Building
+    app.post('/post-building', function(req, res){
+        var newBuilding = new Buildings(req.body);
+
+
+        newBuilding.save(function(err, doc){
+            res.send(doc);
+        });
+
+
+    });
+    //Delete Building
+    app.get('/delete-building/:buildID?', function(req, res){
+        var buildID = req.params.buildID;
+
+        Buildings.remove({ _id: buildID }, function(err){
+            if(err) console.log(err);
+            res.send(200);
+        });
+    });
+    // =====================================
+    // Edit Building ========
+    // =====================================
+    app.post('/edit-building/:buildID?', function(req, res){
+        var buildID = req.params.buildID;
+
+        Buildings.update({_id: buildID}, req.body, function(err, doc){
+            res.send(doc);
+        });
+
+    });
+
+    // =====================================
+    // Upload Image
+    // =====================================
+    app.post('/upload', Upload.array('imgFiles', 12), function(req, res){
+        
+        var buildID = req.body.buildID;
+        var aptID = req.body.aptID;
+        var aptIDX = req.body.aptIDX;
+
+        var images = [];
+
+        req.files.forEach(function(file, idx, arr){
+            images.push(file);
+            
+        });
+
+        //if listingID is true 
+        //do something...
+
+        if(aptID){
+
+            Buildings.findById(buildID, function(err, doc){
+               if(doc.units[aptIDX].available == 'yes'){
+                    Buildings.update({'vacancies.aptNum': aptID}, {'$set': {
+                        'vacancies.$.imgFiles': images
+                    }}, function(err) {
+                        if(err) console.log(err);
+
+                        // res.redirect('/#/preview/' + buildID);
+                    });
+               };
+               Buildings.update({'units.aptNum': aptID}, {'$set': {
+                    'units.$.imgFiles': images
+                }}, function(err) {
+                    if(err) console.log(err);
+
+                    res.redirect('/#/preview/' + buildID);
+                });
+            });
+
+                      
+        } else {
+            Buildings.findByIdAndUpdate(buildID, 
+                {$addToSet: {imgFiles: {$each: images}}}, 
+                function(err, doc){
+                    console.log('Upload Successful...');
+                    res.redirect('/#/preview/' + buildID);
+            });
+        }
+
+    });
+
+    // =====================================
+    // Make Available  =======
+    // =====================================
+    
+    app.get('/available/:buildID?/:aptID?/:idx?/:available?', function(req, res){
+        var buildID = req.params.buildID;
+        var aptID = req.params.aptID;
+        var idx = req.params.idx;
+        var available = req.params.available;
+
+        if(available == 'yes'){
+            Buildings.update({'_id': buildID}, {$pull: {
+                'vacancies' : { aptNum : aptID }
+            }}, function(err){
+                if(err) console.log(err);
+
+                Buildings.findById(buildID, function(err, doc){
+                    doc.units[idx].available = 'no';
+                    
+
+                    doc.save(function(err){
+                        if(err) console.log(err);
+                    });
+                    res.send(doc);
+
+                });
+               
+            });
+
+            
+
+        } else {
+            Buildings.findById(buildID, function(err, doc){
+                doc.units[idx].available = 'yes';
+
+                var listing =  doc.units[idx];
+                doc.vacancies.push(listing);
+
+                doc.save(function(err){
+                    if(err) console.log(err);
+                });
+                res.send(doc);
+
+            });
+        }
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 };
-
-// route middleware to make sure a user is logged in
-function isLoggedIn(req, res, next) {
-
-    // if user is authenticated in the session, carry on 
-    if (req.isAuthenticated())
-        return next();
-
-    // if they aren't redirect them to the home page
-    res.redirect('/');
-}

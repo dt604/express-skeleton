@@ -1,0 +1,172 @@
+<div class="wrapper">
+	<div class="header-top">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="pull-right">
+						
+						<a class="btn btn-warning btn-sm" ng-show="signedIn" href="#/admin">Admin</a>
+						<button ng-show="signedIn" class="btn btn-primary btn-sm">Logout</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div><!-- /.header-top -->
+	
+	<!-- NAV Begin -->
+	<nav class="navbar navbar-default">
+	  <div class="container">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#/">DW Rental Properties</a>
+	    </div>
+
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="mainNav">
+	      
+	      <ul ng-controller="NavCtrl" class="nav navbar-nav navbar-right">
+	        <li ng-repeat="(key, value) in menu"><a ng-click="getTitle(value)" href="#/{{key}}">{{ value }}</a></li>
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+	<!-- NAV End -->
+
+	<div class="overlay-bg text-center">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3">
+					<h1>PREVIEW MODE</h1>
+				</div>
+			</div>
+		</div>
+	</div><!-- /.overlay-bg -->
+</div><!-- Hero/Wrapper End -->
+
+<div class="container">
+	<div class="row">
+		<div class="jumbotron">
+		  <div class="row">
+		  	<div class="col-md-6">
+		  		<img src="/uploads/{{building.imgFiles[0].filename}}" class="img-responsive">
+		  	</div>
+		  	<div class="col-md-6">
+		  		<h2>{{building.name}}</h2>
+		  		<hr>
+		  		<p>{{ building.address }}</p>
+		  		<hr>
+		  		<p>Rental office phone: 604.688-8899 <br><a href="info@dwproperties.com">info@dwproperties.com</a></p>
+
+		  		<a ng-href="#/edit-building/{{ building._id }}" class="btn btn-danger btn-sm">Edit Building</a>
+		  		<a ng-href="#/post-listing/{{building._id}}" class="btn btn-primary btn-sm">Add Unit</a> 
+
+		  	</div>
+		  </div>
+		</div>
+	</div>
+
+	<div class="row">
+		
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Unit #</th>
+							<th>Type</th>
+							<th>Bedrooms</th>
+							<th>Monthly Rent</th>
+							<th>Location</th>
+							<th>FT &sup2;</th>
+							<th>Photos</th>
+							<th>Edit</th>
+						</tr>
+					</thead>
+					<tr ng-repeat="vacancy in building.vacancies">
+						<td>#{{ vacancy.aptNum }}</td>
+						<td>
+							<small class="bg-success"
+								ng-show="vacancy.rentalType.commercial">Commercial
+							</small>
+							<small class="bg-success"
+								ng-show="vacancy.rentalType.residential">Residential
+							</small>
+						</td>
+						<td>{{ vacancy.bedrooms }} bedroom</td>
+						<td>${{ vacancy.rentAmt }}</td>
+						<td>{{ building.community }}</td>
+						
+						<td>{{ vacancy.ft2 }} ft&sup2;</td>
+						<td>
+
+							<!-- /Add Photos -->
+							<a ng-href="#/listing-upload/{{building._id}}/{{vacancy.aptNum}}/{{$index}}" ng-show="!vacancy.imgFiles[0]">Add Photos</a>
+
+							<!-- /View Photos -->
+							<a href="" 
+							ng-click="getPhotos(building._id, $index)" 
+							ng-show="vacancy.imgFiles[0]">View Photos</a>
+						</td>
+
+						<td>
+							<a class="btn btn-danger btn-sm" ng-href="#/admin/authUser">Edit</a>
+						</td>
+					</tr>
+				
+				</table>
+
+			</div><!-- /.panel-body -->
+			
+		</div><!-- /.panel -->
+
+		
+
+
+	</div><!-- /.row -->
+
+	<div class="spacer-40"></div>
+	
+	<div class="row">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row">
+					
+					<div class="col-md-3">
+						<h3>Utilities</h3>
+						<ul>
+							<li ng-repeat="util in building.utils">{{util}}</li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h3>Amenities</h3>
+						<ul>
+							<li ng-repeat="amens in building.amens">{{ amens }}</li>
+						</ul>
+					</div>
+					<div class="col-md-6">
+						<h3>Building Description</h3>
+						<p>{{ building.description }}
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="spacer-40"></div>
+
+
+
+</div><!-- /.container -->
+
+<footer>
+
+</footer>
+
+<div ng-include="'app/admin/partials/photo-gallery.html'"></div>

@@ -1,5 +1,215 @@
+<div class="home-wrapper">
+	<div class="header-top">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="pull-right">
+						<a class="btn btn-warning btn-sm" ng-href="#/admin">
+							Admin
+						</a>
+						<button ng-show="!signedIn" class="btn btn-primary btn-sm">Apply Now</button>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div><!-- /.header-top -->
+	
+	<!-- NAV Begin -->
+	<nav class="navbar navbar-default">
+	  <div class="container">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#/">DW Rental Properties</a>
+	    </div>
+
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="mainNav">
+	      
+	      <ul ng-controller="NavCtrl" class="nav navbar-nav navbar-right">
+	        <li ng-repeat="(key, value) in menu"><a ng-click="getTitle(value)" href="#/{{key}}">{{ value }}</a></li>
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+	<!-- NAV End -->
+
+	<div class="overlay-bg text-center">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3">
+					<h1 class="hero-header">Looking for a place to rent in Vancouver?</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div id="hero-action" class="col-md-12">
+					<div class="row">
+						<div class="col-md-5 col-md-offset-1 border-right">
+							<a href="#/residential">
+								<img src="assets/img/residential.jpg">
+								<h3 class="pull-left">Residential Listings</h3>
+							</a>
+						</div>
+						<div class="col-md-5 col-md-offset-1">
+							<a href="#/residential">
+								<img src="assets/img/downtown.jpg">
+								<h3 class="pull-left">Commercial Listings</h3>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div><!-- /.overlay-bg -->
+
+	<div class="container offset">
+
+	</div><!-- /.offset -->
+</div><!-- Hero/Wrapper End -->
+
+<!-- <div class="after-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				
+			</div>
+
+		</div>
+	</div>
+</div> -->
+
 <div class="container">
 	<div class="row">
-		{{message}}
+		<div class="col-md-6 col-md-offset-3 text-center">
+			<h2>Featured Listings</h2>
+			<hr>
+		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-12">
+			
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<table class="table">
+						<thead>
+						<tr>
+							<th>Unit #</th>
+							<th>Type</th>
+							<th>Bedrooms</th>
+							<th>Monthly Rent</th>
+							<th>Availability</th>
+							<th>FT &sup2;</th>
+							<th>Photos</th>
+							<th></th>
+						</tr>
+						</thead>
+						<tr ng-repeat="feature in featured">
+							<td><a href="#/building/{{feature.buildingID}}">#{{ feature.aptNum }}</a></td>
+							<td>
+								<small class="bg-success"
+									ng-show="feature.rentalType.commercial">Commercial
+								</small>
+								<small class="bg-success"
+									ng-show="feature.rentalType.residential">Residential
+								</small>
+							</td>
+							<td>{{ feature.bedrooms }} bedrooms</td>
+							<td>${{ feature.rentAmt }}</td>
+							<td>Available Now</td>
+							<td>{{ feature.ft2 }} ft&sup2;</td>
+							<td>
+								<span ng-show="!feature.imgFiles[0]">No Photos</span>
+
+								<!-- /View Photos -->
+								<a href="" 
+								ng-click="getPhotos(feature.buildingID, $index)" 
+								ng-show="feature.imgFiles[0]"
+								>View Photos</a>
+							</td>
+							<td><a ng-href="#/building/{{ feature.buildingID }}" class="btn btn-primary btn-sm">Details</a></td>
+						</tr>
+						
+					</table>
+				</div>
+			</div>
+			
+		</div>
+	</div><!-- /.row -->
+	
+
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3 text-center">
+			<h2>Search by Neighborhood</h2>
+			<hr>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-4">
+			<div class="hover-box">
+				<a href="#/community/UBC">
+					<h3 class="comm ubc">UBC</h3>
+				</a>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="hover-box">
+				<a href="#/community/Broadway">
+					<h3 class="comm broadway">Broadway &amp; Oak</h3>
+				</a>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="hover-box">
+				<a href="#/community/Kingsway">
+					<h3 class="comm kingsway">Kingsway &amp; Joyce</h3>
+				</a>
+			</div>
+		</div>
+	</div>
+	
+
+
+	<div class="row">
+		<div class="col-md-4">
+			<div class="hover-box">
+				<a href="#/community/Gastown">
+					<h3 class="comm gastown">Gastown</h3>
+				</a>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="hover-box">
+				<a href="#/community/Downtown">
+					<h3 class="comm downtown">Downtown</h3>
+				</a>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="hover-box">
+				<a href="#/community/Kitsilano">
+					<h3 class="comm kitsilano">Kitsilano</h3>
+				</a>
+			</div>
+		</div>
+	</div>
+
 </div>
+
+<footer>
+	<div class="container">
+		<div class="row">
+			
+		</div>
+	</div>
+</footer>
+
+
+<div ng-include="'app/admin/partials/photo-gallery.html'"></div>
+

@@ -1,0 +1,38 @@
+<div class="spacer-80"></div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="row">
+				<form id="imgUpload" action="/upload" method="post" enctype="multipart/form-data">	
+					<div>
+						<!-- / HIDDEN -->
+						<input class="hidden" type="text" ng-model="building._id" name="buildID">
+						<!-- /Hidden End -->
+
+						
+						<span class="file-input btn btn-file">
+			                Drag and Drop Your Photos Here
+			                <br>or
+			                <br><button class="btn btn-info btn-lg">Select Photo</button> 
+			                <input id='imgInp' type="file" multiple 
+			                file-model='building.imgFiles' 
+			                name="imgFiles">
+						
+			            </span>
+					</div>
+				</form>
+
+				<a class="btn btn-primary" ng-href="#/admin">Save Changes</a>
+			</div><!-- /.row -->
+
+			<div class="row" id="fileDisplayArea">
+				
+			</div>
+		</div>
+
+		
+	</div>
+
+</div>
+

@@ -1,0 +1,175 @@
+<div class="spacer-80"></div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3>Post Building</h3>
+				</div>
+				<div class="panel-body">
+					<form>
+						<div class="form-group">
+							<label for="rentalType">Rental Type</label>
+							<input type="checkbox" 
+								ng-model="building.rentalType.residential"
+								ng-true-value="'Residential'"
+								ng-false-value=""> <span class="check-label">Residential</span>
+
+							<input type="checkbox" 
+								ng-model="building.rentalType.commercial"
+								ng-true-value="'Commercial'"
+								ng-false-value="">  <span class="check-label">Commercial</span>
+						</div><!-- /.form-group (TYPE) -->
+
+						<hr>
+
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-6">
+									<label for="name">Building Name</label>
+									<input class="form-control" type="text" ng-model="building.name">
+								</div>
+								<div class="col-md-6">
+									<label for="community">Community</label>
+									<select class="form-control" ng-model="building.community">
+										<option value="Vancouver">Vancouver</option>
+										<option value="UBC">UBC</option>
+										<option value="Broadway">West Broadway</option>
+										<option value="Kingsway">Kingsway &amp; Joyce</option>
+										<option value="Gastown">Gastown</option>
+										<option value="Downtown">Downtown</option>
+										<option value="Kitsilano">Kitsilano</option>
+									</select>
+								</div>
+							</div>
+							
+						</div><!-- /.form-group (NAME) -->
+
+						<div class="form-group">
+							<label for="address">Address</label>
+							<div class="row">
+								<div class="col-md-3">
+									<input class="form-control" type="text" 
+										ng-model="building.streetNum"
+										placeholder="1234">
+									<p><small><span>* </sapn>Street Number</small></p>
+								</div>
+								<div class="col-md-4">
+									<input class="form-control" type="text" 
+										ng-model="building.streetName"
+										placeholder="Anywhere Street">
+									<p><small><span>* </span>Street Name</small></p>
+								</div>
+								<div class="col-md-2">
+									<input class="form-control" type="text" 
+										ng-model="building.postal"
+										mask='@9@ 9@9'
+										placeholder="V6V 6V6">
+									<p><small>Postal Code</small></p>
+								</div>
+								<div class="col-md-3">
+									<select id="selectCity" class="form-control" ng-model="building.city">
+										<option value="">-- Select City --</option>
+										
+										<option value="Burnaby">Burnaby</option>
+										<option value="Coquitlum">Coquitlum</option>
+										<option value="Delta">Delta</option>
+										<option value="Surrey">Surrey</option>
+										<option value="New Westminster">New Westminster</option>
+										<option value="Langley">Langley</option>
+										<option ng-value="Vancouver">Vancouver</option>
+										<option value="Richmond">Richmond</option>
+										<option value="North Shore">North Shore</option>
+										<option value="UBC">UBC</option>
+										<option value="Vancouver">Downtown/West End</option>
+									</select>
+									<p><small><span>* </span>City</small></p>
+								</div>
+							</div><!-- ./row -->
+						</div><!-- /.form-group (ADDRESS) -->
+
+						<div class="form-group">
+							<label for="utils">Included Utilities</label>
+							<div class="row">
+								<div class="col-md-3">
+									<input type="checkbox" 
+										ng-model="building.utils.electricity"
+										ng-true-value="'Electricity'"
+										ng-false-value=""> Electricity
+								</div>
+								<div class="col-md-3">
+									<input type="checkbox"
+										ng-model="building.utils.heat"
+										ng-true-value="'Heat'"
+										ng-false-value=""> Heat
+								</div>
+								<div class="col-md-3">
+									<input type="checkbox"
+										ng-model="building.utils.water"
+										ng-true-value="'Water'"
+										ng-false-value=""> Water
+								</div>
+								<div class="col-md-3">
+									<input type="checkbox"
+										ng-model="building.utils.internet"
+										ng-true-value="'Internet'"
+										ng-false-value=""> Internet
+								</div>
+							</div>
+						</div><!-- /.fom-group (UTILS) -->
+						
+						<hr>
+
+						<div class="form-group">
+							<label for="utils">Amenities</label>
+							<div class="row">
+								<div class="col-md-3">
+									<input type="checkbox" 
+										ng-model="building.amens.laundry"
+										ng-true-value="'Laundry Facility'"
+										ng-false-value=""> Laundry Facility
+								</div>
+								<div class="col-md-3">
+									<input type="checkbox"
+										ng-model="building.amens.storage"
+										ng-true-value="'Storage Lockers'"
+										ng-false-value=""> Storage Lockers
+								</div>
+								<div class="col-md-3">
+									<input type="checkbox"
+										ng-model="building.amens.balcony"
+										ng-true-value="'Balcony'"
+										ng-false-value=""> Balcony
+								</div>
+								<div class="col-md-3">
+									<input type="checkbox"
+										ng-model="building.amens.hardwoodFloor"
+										ng-true-value="'Hardwood Flooring'"
+										ng-false-value=""> Hardwood Floor
+								</div>
+							</div>
+						</div><!-- /.fom-group (AMENITIES) -->
+
+						<hr>
+						
+						<div class="form-group">
+							<label for="description">Description</label>
+							<textarea rows="8" class="form-control" ng-model="building.description"></textarea>
+						</div>
+
+					</form>
+				</div>
+				<div class="panel-footer clearfix">
+					<div class="pull-right">
+						<button class="btn btn-primary" ng-click="editBuilding(building)">
+							Continue
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>

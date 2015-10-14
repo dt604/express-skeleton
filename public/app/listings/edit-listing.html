@@ -1,0 +1,54 @@
+<div class="spacer-80"></div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<form id="newListing">
+					
+
+				<div class="form-group">
+					<label for="available">Available</label>
+					<select name="available" class="form-control" ng-model="listing.available">
+						<option value="yes">Yes</option>
+						<option value="no">No</option>
+					</select>
+				</div><!-- /.form-group -->
+				<div class="form-group">
+					<label for="buildingName">Building: </label>
+					<select ng-model="listing.buildingID" class="form-control">
+						<option ng-repeat="building in buildings" value="{{ building._id }}">
+							{{ building.name }}
+						</option>
+					</select>
+					<input name="buildingID" class="hidden" type="text" ng-model="listing.buildingID">
+				</div><!-- /.form-group -->
+				<div class="form-group">
+					<label for="aptNum">Apartment #</label>
+					<input name="aptNum" class="form-control" type="text" ng-model="listing.aptNum">
+				</div><!-- /.form-group -->
+				<div class="form-group">
+					<label for="bedrooms">Bedrooms</label>
+					<input name="bedrooms" class="form-control" type="text" ng-model="listing.bedrooms">
+				</div><!-- /.form-group -->
+				<div class="form-group">
+					<label for="rentAmt">Rent Amount</label>
+					<input name="rentAmt" class="form-control" type="text" ng-model="listing.rentAmt">
+				</div><!-- /.form-group -->
+				<div class="form-group">
+					<label for="ft2">Square Footage</label>
+					<input name="ft2" class="form-control" type="text" ng-model="listing.ft2">
+				</div><!-- /.form-group -->
+
+
+	
+
+
+				<button ng-click="editListing(listing)" class="btn btn-primary">Edit Listing</button>
+
+
+			</form>
+		</div>
+	</div>
+
+
+</div>

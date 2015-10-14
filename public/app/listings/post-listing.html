@@ -1,16 +1,86 @@
+<div class="spacer-80"></div>
+
 <div class="container">
 	<div class="row">
-		<form action="/post-listing" method="post" enctype="multipart/form-data">
-			<div class="form-group">
-				<label for="title">Listing Title</label>
-				<input type="text" name="title" ng-model="listing.title" class="form-control">
-			</div>
+		<div class="col-md-8 col-md-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3>Post Listing</h3>
+				</div>
+				<div class="panel-body">
+					<form id="newListing">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-6">
+									<label for="rentalType">Rental Type</label>
+									<input type="checkbox" 
+										ng-model="listing.rentalType.residential"
+										ng-true-value="'Residential'"
+										ng-false-value=""> Residential
 
-			<div class="form-group">
-				<label for="imgFile">Upload Image</label>
-				<input type="file" name="imgFile" file-model="listing.img">
+									<input type="checkbox" 
+										ng-model="listing.rentalType.commercial"
+										ng-true-value="'Commercial'"
+										ng-false-value="">  <span class="check-label">Commercial</span>
+								</div>
+								<div class="col-md-6">
+									<label for="feature">Featured Listing</label>
+									<input type="checkbox" 
+										ng-model="listing.feature"> Yes
+								</div>
+							</div>
+						</div><!-- /.form-group (TYPE) -->
+						
+						<hr>
+
+						<div class="form-group">
+							<label for="available">Available</label>
+							<select name="available" class="form-control" ng-model="listing.available">
+								<option value="yes">Yes</option>
+								<option value="no">No</option>
+							</select>
+						</div><!-- /.form-group -->
+
+						<div class="form-group">
+							<label for="buildingName">Building: </label>
+							<select ng-model="listing.buildingID" class="form-control">
+								<option ng-repeat="building in buildings" value="{{ building._id }}">
+									{{ building.name }}
+								</option>
+							</select>
+							
+							<input name="buildingID" class="hidden" type="text" ng-model="listing.buildingID">
+						</div><!-- /.form-group -->
+						<div class="form-group">
+							<label for="Bedrooms">Bedrooms</label>
+							<select class="form-control" ng-model="listing.bedrooms">
+								<option value="1">1 bedroom</option>
+								<option value="2">2 bedrooms</option>
+								<option value="3">3 bedrooms</option>
+								<option value="4">4 bedrooms +</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="aptNum">Apartment #</label>
+							<input name="aptNum" class="form-control" type="text" ng-model="listing.aptNum">
+						</div><!-- /.form-group -->
+						<div class="form-group">
+							<label for="rentAmt">Rent Amount</label>
+							<input name="rentAmt" class="form-control" type="text" ng-model="listing.rentAmt">
+						</div><!-- /.form-group -->
+						<div class="form-group">
+							<label for="ft2">Square Footage</label>
+							<input name="ft2" class="form-control" type="text" ng-model="listing.ft2">
+						</div><!-- /.form-group -->
+
+					</form>
+				</div>
+				<div class="panel-footer">
+					<button ng-click="postListing(listing)" class="btn btn-primary">Post Listing</button>
+				</div>
 			</div>
-			<button type="submit" class="btn btn-primary">Post Listing</button>
-		</form>
+		</div>
 	</div>
+
+
 </div>

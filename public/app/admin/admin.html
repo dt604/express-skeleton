@@ -1,0 +1,106 @@
+<div class="spacer-80"></div>
+<div class="container">
+	<div ng-show="!signedIn" class="row">
+		<div class="col-md-6 col-md-offset-3 text-center">
+			<p>You must be logged in to view this page. 
+			<a href="" data-toggle="modal" data-target="#login">Login</a> or 
+			<a href="" data-toggle="modal" data-target="#register">Register</a>. </p>
+			<a ng-href="#/residential" class="btn btn-primary">Back to listings</a>
+		</div>
+	</div>
+	<div ng-show="signedIn" class="row">
+		<div class="col-md-12">
+		
+			<div ng-repeat="building in buildings | orderBy: '+name'" class="panel panel-default">
+				<div class="panel-heading">
+					<h3>{{ building.name }} 
+					<small ng-show="building.rentalType.residential" class="bg-default">R</small>
+					<small ng-show="building.rentalType.commercial" class="bg-default">C</small></h3>
+					
+					<div class="controls clearfix">
+						<a ng-href="#/post-listing/{{building._id}}" class="btn btn-warning btn-sm">New Listing</a>
+						<a class="btn btn-primary btn-sm" ng-href="#/preview/{{ building._id }}">Preview</a>
+						<button ng-click="deleteBuilding(building._id)" class="btn btn-danger btn-sm">Delete Building</button>
+					</div>
+					
+
+
+				</div>
+				<div class="panel-body">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Unit #</th>
+								<th>Rental Type</th>
+								<th>Bedrooms</th>
+								<th>Monthly Rent</th>
+								<th>Location</th>
+								<th>FT &sup2;</th>
+								<th>Available</th>
+								<th>Photos</th>
+								<th></th>
+
+							</tr>
+						</thead>
+						<tr ng-repeat="unit in building.units | orderBy: 'aptNum'">
+							<td>
+								<a href="#/preview/{{ building._id }}"
+									class="pointer">#{{ unit.aptNum }}</a>
+							</td>
+							<td>
+								<small class="bg-default"
+									ng-show="unit.rentalType.commercial">C
+								</small>
+								<small class="bg-default"
+									ng-show="unit.rentalType.residential">R
+								</small>
+							</td>
+							<td>{{ unit.bedrooms }} bedroom</td>
+							<td>${{ unit.rentAmt }}</td>
+							<td>{{ building.community }}</td>
+							
+							<td>{{ unit.ft2 }} ft&sup2;</td>
+							<td><a class="pointer" ng-click="available(building._id, unit.aptNum, $index, unit.available)">{{ unit.available }}</a></td>
+							<td>
+
+								<!-- /Add Photos -->
+								<a ng-href="#/listing-upload/{{building._id}}/{{unit.aptNum}}/{{$index}}" 
+									ng-show="!unit.imgFiles[0]">Add Photos</a>
+
+								<!-- /View Photos -->
+								<a class="pointer" 
+								ng-click="getPhotos(building._id, $index)" 
+								ng-show="unit.imgFiles[0]">View Photos</a>
+							</td>
+
+							<td>
+								
+								<a class="pointer" ng-click="deleteListing(building._id, unit.aptNum, $index, unit.available)">Remove</a>
+							</td>
+
+						</tr>
+					
+					</table>
+				</div><!-- /.panel-body -->
+			</div><!-- /.panel -->
+
+			<div class="spacer-80">
+				<a ng-href="#/post-building" class="btn btn-success">New Building</a>
+			</div>
+		</div><!-- /.col-md-12 -->
+	</div><!-- /.row -->
+	
+	
+	
+
+
+
+
+</div><!-- /.container -->
+
+<div ng-include="'app/admin/partials/photo-gallery.html'"></div>
+<div ng-include="'app/admin/partials/login.html'"></div>
+<div ng-include="'app/components/nav/partials/register.html'"></div>
+
+
+
