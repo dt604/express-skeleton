@@ -148,21 +148,38 @@ input.small{
 /*//////////////////////////
 ////Footer
 //////////////////////////*/
+
 footer{
-	padding: 40px 0;
-	min-height: 50px;
-	background: rgba(1,37,70,1);
+	background: #fffffa;
 	margin-top: 80px;
-	color: #cccccc;
 }
 
-.footer-nav{
+footer ul{
 	list-style: none;
+	padding: 0;
 }
-.footer-nav li{
-	border-bottom: 1px solid black;
+
+footer li{
 	padding: 10px 0;
+	border-bottom: 1px solid #f0f0f0;
 }
+
+.nopad-top{
+	padding-top: 0 !important;
+}
+
+footer .container{
+	padding: 40px 0;
+}
+.copyright{
+	padding: 10px 0;
+	min-height: 20px;
+	background: rgba(1,37,70,1);
+	color: #f0f0f0;
+}
+
+
+
 /*//////////////////////////
 ////Hero/Top Fold
 //////////////////////////*/
