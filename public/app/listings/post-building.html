@@ -29,12 +29,14 @@
 							<input type="checkbox"
 								ng-model="building.rentalType.residential"
 								ng-true-value="'Residential'"
-								ng-false-value=""> Residential
+								ng-false-value=""
+								ng-required="!building.rentalType.commercial"> Residential
 
 							<input type="checkbox" 
 								ng-model="building.rentalType.commercial"
 								ng-true-value="'Commercial'"
-								ng-false-value="">  Commercial
+								ng-false-value=""
+								ng-required="!building.rentalType.residential">  Commercial
 						</div><!-- /.form-group (TYPE) -->
 
 						<hr>
@@ -55,8 +57,8 @@
 										<option value="">--Select Community--</option>
 										<option value="Vancouver">Vancouver</option>
 										<option value="UBC">UBC</option>
-										<option value="Broadway">West Broadway</option>
-										<option value="Kingsway">Kingsway &amp; Joyce</option>
+										<option value="West-Broadway">West Broadway</option>
+										<option value="Kingsway-Joyce">Kingsway &amp; Joyce</option>
 										<option value="Gastown">Gastown</option>
 										<option value="Downtown">Downtown</option>
 										<option value="Kitsilano">Kitsilano</option>
@@ -70,7 +72,8 @@
 							<label for="address">Address</label>
 							<div class="row">
 								<div class="col-md-3">
-									<input class="form-control" type="text" name="streetNum" 
+									<input class="form-control" type="text" 
+										name="streetNum" 
 										ng-model="building.streetNum"
 										placeholder="1234"
 										required>

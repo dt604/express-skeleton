@@ -139,7 +139,9 @@ Drop Photos
 label{
 	display: block;
 }
-
+input.small{
+	width: 60px;
+}
 
 
 

@@ -44,10 +44,10 @@
 							<th>Type</th>
 							<th>Bedrooms</th>
 							<th>Monthly Rent</th>
-							<th>Location</th>
+							<th>Community</th>
+							<th>Availability</th>
 							<th>FT &sup2;</th>
 							<th>Photos</th>
-							<th>Edit</th>
 						</tr>
 					</thead>
 
@@ -66,7 +66,7 @@
 						<td>{{ unit.bedrooms }} bedrooms</td>
 						<td>${{ unit.rentAmt }}</td>
 						<td>{{ building.community }}</td>
-						<td>Available Now</td>
+						<td>{{ unit.moveInDate }}</td>
 						<td>{{ unit.ft2 }} ft&sup2;</td>
 						<td>
 							<span ng-show="!unit.imgFiles[0]">No Photos</span>

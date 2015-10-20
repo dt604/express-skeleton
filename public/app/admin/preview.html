@@ -80,6 +80,9 @@
 	<div class="row">
 		
 		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3>Available Units</h3>
+			</div>
 			<div class="panel-body">
 				<table class="table">
 					<thead>
@@ -88,7 +91,8 @@
 							<th>Type</th>
 							<th>Bedrooms</th>
 							<th>Monthly Rent</th>
-							<th>Location</th>
+							<th>Community</th>
+							<th>Availability</th>
 							<th>FT &sup2;</th>
 							<th>Photos</th>
 							<th>Edit</th>
@@ -109,6 +113,7 @@
 						
 						<td>${{ unit.rentAmt }}</td>
 						<td>{{ building.community }}</td>
+						<td>{{ unit.moveInDate }}</td>
 						
 						<td>{{ unit.ft2 }} ft&sup2;</td>
 						<td>
