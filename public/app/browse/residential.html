@@ -29,7 +29,8 @@
 			<div ng-show="selected == 'gallery'" class="tab-content">
 				<div class="row">
 
-					<div ng-repeat="building in buildings" class="hover-wrap col-md-4">
+					<div ng-repeat="building in buildings |
+						filter: {rentalType:{residential: 'Residential'}}" class="hover-wrap col-md-4">
 						<div class="hover-box">
 							<div class="img-wrap">
 								<div class="img-overlay">
@@ -63,7 +64,7 @@
 					<div class="col-md-12">
 						<map init-event="getMap" id="map" center="49.2845094,-123.04535870000001" zoom="11">
 							
-							<marker id="build-{{building._id}}" ng-repeat="building in buildings"
+							<marker id="build-{{building._id}}" ng-repeat="building in buildings | filter: {rentalType:{residential: 'Residential'}}"
 								position="{{ building.lat }}, {{ building.lng }}"
 								on-click="showInfoWindow(event, 'building._id')">
 
@@ -100,7 +101,8 @@
 
 			
 
-				<div class="row" ng-repeat="building in buildings">
+				<div class="row" ng-repeat="building in buildings |
+					filter: {rentalType:{residential: 'Residential'}}">
 
 					<div class="row listings">
 						<div class="col-md-1">

@@ -63,7 +63,7 @@
 			<div ng-show="selected == 'map'" class="tab-content">
 				<div class="row">
 					<div class="col-md-12">
-						<map init-event="getMap" id="map" center="49.2845094,-123.04535870000001" zoom="12">
+						<map init-event="getMap" id="map" center="49.2845094,-123.04535870000001" zoom="11">
 							
 							<marker id="build-{{building._id}}" ng-repeat="building in buildings"
 								position="{{ building.lat }}, {{ building.lng }}"

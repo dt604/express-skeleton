@@ -64,7 +64,7 @@
 					<div class="col-md-12">
 						<map init-event="getMap" id="map" center="49.2845094,-123.04535870000001" zoom="11">
 							
-							<marker id="build-{{building._id}}" ng-repeat="building in buildings"
+							<marker id="build-{{building._id}}" ng-repeat="building in buildings | filter: {rentalType:{commercial: 'Commercial'}}"
 								position="{{ building.lat }}, {{ building.lng }}"
 								on-click="showInfoWindow(event, 'building._id')">
 
@@ -101,7 +101,7 @@
 
 			
 
-				<div class="row" ng-repeat="building in buildings">
+				<div class="row" ng-repeat="building in buildings | filter: {rentalType:{commercial: 'Commercial'}}">
 
 					<div class="row listings">
 						<div class="col-md-1">
