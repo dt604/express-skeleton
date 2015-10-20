@@ -50,6 +50,9 @@
 
 								
 								<p>{{ building.name }}</p>
+								<h4><a ng-href="#/building/{{building._id}}">
+											{{ building.community }}
+									</a></h4>
 								<h3> {{ building.vacancies.length }} <small>Available</small></h3>
 							</div>
 						</div>
@@ -62,8 +65,31 @@
 					<div class="col-md-12">
 						<map init-event="getMap" id="map" center="49.2845094,-123.04535870000001" zoom="12">
 							
-							<marker ng-repeat="building in buildings"
-								position="{{ building.lat }}, {{ building.lng }}">
+							<marker id="build-{{building._id}}" ng-repeat="building in buildings"
+								position="{{ building.lat }}, {{ building.lng }}"
+								on-click="showInfoWindow(event, 'building._id')">
+
+
+								<info-window id="building._id" max-width="200" visible-on-marker="build-{{building._id}}">
+								    <div ng-non-bindable="">
+								      
+								      	<div class="text-center">
+								      		<a href="#/building/{{building._id}}">
+								      			<img src="assets/img/rental-placeholder.png" class="img-responsive">
+
+										      	<h4>{{building.name}}</h4>
+										      	<h4 class="green">{{ building.vacancies.length }} 
+
+										      	<span ng-show="building.vacancies.length > 1">Vacancies </span>
+										      	<span ng-show="building.vacancies.length == 1">Vacancy</span>
+										      	Available</h4>
+								      		</a>
+
+
+								      	</div>
+								        
+								    </div>
+								  </info-window>
 							</marker>
 
 						</map>
@@ -82,7 +108,8 @@
 						</div>
 
 						<div class="col-md-6">
-							<h2><small>Available apatment rentals - <span>{{ building.community }}</span></small> <br>{{ building.name }}</h2>
+							<h2><small>Available apatment rentals - <span>{{ building.community }}</span></small> 
+							<br><a class="no-line" href="#/building/{{ building._id }}">{{ building.name }}</a></h2>
 						</div>
 						<div class="col-md-3 col-md-offset-2">
 						<div class="spacer-80"></div>

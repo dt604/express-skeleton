@@ -8,7 +8,7 @@
 	<div class="row">
 		<div class="cold-md-12">
 			<div class="tabs">
-
+				
 				<div class="tab">
 					<button class="btn btn-default" ng-click="selected = 'gallery'" ng-class="{ 'selected': selected == 'gallery' }">
 						Gallery
@@ -18,21 +18,24 @@
 					<button class="btn btn-default" ng-click="selected = 'map'" 
 						ng-class="{ 'selected': selected == 'map' }">Map</button>
 				</div>
+				<!-- Map Tab -->
 				<div class="tab">
 					<button class="btn btn-default" ng-click="selected = 'list'" 
 						ng-class="{ 'selected': selected == 'list' }">List</button>
 				</div>
 			</div><!-- /.tabs -->
-
+			
+			<!-- Gallery Tab -->
 			<div ng-show="selected == 'gallery'" class="tab-content">
 				<div class="row">
-					<div ng-repeat="building in buildings |
-						filter: {rentalType:{commercial: 'commercial'}}" class="col-md-4">
-						
-						<div class="panel panel-default hover-box">
-							<div class="panel-body">
+
+					<div ng-repeat="building in buildings | 
+						filter: {rentalType:{commercial: 'Commercial'}}" class="hover-wrap col-md-4">
+						<div class="hover-box">
+							<div class="img-wrap">
 								<div class="img-overlay">
-									<a ng-href="#/building/{{building._id}}" class="btn btn-warning">More Info</a>
+									<a class="btn btn-warning"
+										ng-href="#/building/{{building._id}}">Details</a>
 								</div>
 								<img ng-show="building.imgFiles[0]" 
 						  			src="uploads/{{ building.imgFiles[0].filename }}"
@@ -40,33 +43,65 @@
 						  		<img src="assets/img/rental-placeholder.png" 
 						  			class="img-responsive"
 						  			ng-show="!building.imgFiles[0]">
-								<p>{{ building.name }}
-								- {{ building.community }}</p>
-								<h3>{{ building.vacancies.length }} Available</h3>
+							</div>
+							<div class="text-center padding">
+
+								
+								<p>{{ building.name }}</p>
+								<h4><a ng-href="#/building/{{building._id}}">
+											{{ building.community }}
+									</a></h4>
+								<h3> {{ building.vacancies.length }} <small>Available</small></h3>
 							</div>
 						</div>
 					</div>
 
 				</div>
 			</div>
+			<!-- Map Tab -->
 			<div ng-show="selected == 'map'" class="tab-content">
 				<div class="row">
 					<div class="col-md-12">
-						<map init-event="getMap" id="map" center="49.2845094,-123.04535870000001" zoom="12">
+						<map init-event="getMap" id="map" center="49.2845094,-123.04535870000001" zoom="11">
 							
-							<marker ng-repeat="building in buildings"
-								position="{{ building.lat }}, {{ building.lng }}">
+							<marker id="build-{{building._id}}" ng-repeat="building in buildings"
+								position="{{ building.lat }}, {{ building.lng }}"
+								on-click="showInfoWindow(event, 'building._id')">
+
+
+								<info-window id="building._id" max-width="200" visible-on-marker="build-{{building._id}}">
+								    <div ng-non-bindable="">
+								      
+								      	<div class="text-center">
+								      		<a href="#/building/{{building._id}}">
+								      			<img src="assets/img/rental-placeholder.png" class="img-responsive">
+
+										      	<h4>{{building.name}}</h4>
+										      	<h4 class="green">{{ building.vacancies.length }} 
+
+										      	<span ng-show="building.vacancies.length > 1">Vacancies </span>
+										      	<span ng-show="building.vacancies.length == 1">Vacancy</span>
+										      	Available</h4>
+								      		</a>
+
+
+								      	</div>
+								        
+								    </div>
+								  </info-window>
+
 							</marker>
 
 						</map>
 					</div>
 				</div>
 			</div>
+			<!-- List Tab -->
 			<div ng-show="selected == 'list'" class="tab-content">
 
 			
 
-				<div class="row" ng-repeat="building in buildings | filter: {rentalType:{commercial: 'commercial'}}">
+				<div class="row" ng-repeat="building in buildings">
 
 					<div class="row listings">
 						<div class="col-md-1">
@@ -74,11 +109,12 @@
 						</div>
 
 						<div class="col-md-6">
-							<h2><small>Available apatment rentals - <span>{{ building.community }}</span></small> <br>{{ building.name }}</h2>
+							<h2><small>Available apatment rentals - <span>{{ building.community }}</span></small> 
+							<br><a class="no-line" href="#/building/{{ building._id }}">{{ building.name }}</a></h2>
 						</div>
 						<div class="col-md-3 col-md-offset-2">
 						<div class="spacer-80"></div>
-						<a href="#/preview/{{ building._id }}" class="btn btn-primary">View Details</a>
+						<a href="#/building/{{ building._id }}" class="btn btn-warning">View Details</a>
 						</div>
 					</div>
 					<!-- ngRepeat Listings Begin -->
@@ -93,7 +129,7 @@
 
 		</div><!-- /.tabs -->
 	</div><!-- /.row -->
-	
+	<span us-spinner spinner-key="spinner-1"></span>
 	
 	
 
