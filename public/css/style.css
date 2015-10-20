@@ -502,3 +502,7 @@ small.bg-default{
 .no-line:hover{
 	text-decoration: none;
 }
+
+.margin-r-10{
+	margin-right: 10px;
+}

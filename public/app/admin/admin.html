@@ -86,12 +86,15 @@
 							<td>
 
 								<!-- /Add Photos -->
-								<a ng-href="#/listing-upload/{{building._id}}/{{unit._id}}/{{$index}}" 
-									ng-show="!unit.imgFiles[0]">Add Photos</a>
+								<!-- <a ng-href="#/listing-upload/{{building._id}}/{{unit._id}}/{{$index}}">Add Photos</a> -->
 
+								<a ng-href="#/listing-upload/{{building._id}}/{{unit._id}}/{{$index}}"
+									class="margin-r-10">
+									<span class="glyphicon glyphicon-plus"></span>
+								</a>
 								<!-- /View Photos -->
 								<a class="pointer" ng-click="getPhotos(building._id, $index)"
-								ng-show="unit.imgFiles[0]">View Photos</a>
+								ng-show="unit.imgFiles[0]"><span class="glyphicon glyphicon-search"></span></a>
 
 							</td>
 

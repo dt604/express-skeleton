@@ -3,19 +3,27 @@
 
 		init();
 
-		$scope.building = {};
+		
 
 		$scope.featured = [];
+		
 
 		//Get 'phots' for Photo Gallery modal
 		$scope.getPhotos = function(buildID, index){
 			usSpinnerService.spin('spinner-1');
 
+			
+
 			Listings.getBuilding(buildID).success(function(response){
 				$scope.building = response;
-				$scope.aptIndex = index;
+
+				$scope.selectedApt = $scope.featured[index];
+
+				
 				usSpinnerService.stop('spinner-1');
 				$('#photo-gallery').modal('toggle');
+
+				return $scope.selectedApt;
 			});
 		};
 

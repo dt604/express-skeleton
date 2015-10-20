@@ -38,12 +38,21 @@
 					<span us-spinner spinner-key="spinner-1"></span>
 				</form>
 
-				<a class="btn btn-primary" ng-href="#/admin/authUser">Save Changes</a>
+				
 			</div><!-- /.row -->
 
-			<div class="row" id="fileDisplayArea">
-				
+			<div class="row" ng-repeat="img in building.imgFiles">
+				<img src="uploads/{{img.filename}}" class="imgTN">
+				<button class="btn btn-danger" 
+					ng-click="deleteImg($index)">Delete</button>
 			</div>
+
+			<hr>
+			
+			<div class="row">
+				<a class="btn btn-primary" ng-href="#/admin/authUser">Save Changes</a>
+			</div>
+
 		</div>
 
 		

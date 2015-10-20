@@ -1,5 +1,5 @@
 (function(){
-	var ListingsCtrl = function($scope, $routeParams, $location, Listings, usSpinnerService){
+	var ListingsCtrl = function($scope, $routeParams, $location, $http, Listings, usSpinnerService){
 
 		init();
 
@@ -133,15 +133,32 @@
 			$('#imgUpload').submit();
 		});
 
-		//Delete Image
+		//Delete Building Image
 		$scope.deleteImg = function(index){
-			
+			usSpinnerService.spin('spinner-1');
 			var buildID = $scope.building._id;
 			var imgIndex = index;
 
 			$http.get('/img/' + buildID + '/' + index).success(function(response){
+				usSpinnerService.stop('spinner-1');
 				$scope.building.imgFiles = response.imgFiles;
 			});
+		 };
+		 //Delete Unit Images
+		 $scope.deleteUnitImg = function(index){
+		 	usSpinnerService.spin('spinner-1');
+		 	var aptIDX = $scope.aptIDX;
+		 	var buildID = $scope.building._id;
+		 	var imgIDX = index;
+		 	var aptID = $scope.aptID;
+
+		 	$http.get('/deleteImg/' + buildID + '/' + aptIDX + '/' + imgIDX)
+		 		.success(function(response){
+		 			usSpinnerService.stop('spinner-1');
+		 			$scope.building = response;
+		 		});
+
+
 		 };
 
 		 //Read Image for upload

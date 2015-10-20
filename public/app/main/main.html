@@ -74,17 +74,6 @@
 	</div><!-- /.offset -->
 </div><!-- Hero/Wrapper End -->
 
-<!-- <div class="after-hero">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-				
-			</div>
-
-		</div>
-	</div>
-</div> -->
-
 <div class="container">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3 text-center">
@@ -117,14 +106,18 @@
 								<small class="bg-success"
 									ng-show="feature.rentalType.commercial">Commercial
 								</small>
-								<small class="bg-success"
+								<small class="bg-info"
 									ng-show="feature.rentalType.residential">Residential
 								</small>
 							</td>
-							<td>{{ feature.bedrooms }} bedrooms</td>
+							<td>
+								{{ feature.bedrooms }} 
+								<span ng-show="feature.bedrooms == 1">bedroom</span>
+								<span ng-show="feature.bedrooms > 1">bedrooms</span>
+							</td>
 							<td>${{ feature.rentAmt }}</td>
 							<td>{{ feature.community }}</td>
-							<td>Available Now</td>
+							<td>{{ feature.moveInDate }}</td>
 							<td>{{ feature.ft2 }} ft&sup2;</td>
 							<td>
 								<span ng-show="!feature.imgFiles[0]">No Photos</span>
@@ -215,5 +208,5 @@
 </footer>
 
 
-<div ng-include="'app/admin/partials/photo-gallery.html'"></div>
+<div ng-include="'app/main/partials/photo-gallery.html'"></div>
 <div ng-include="'app/forms/contact.html'"></div>

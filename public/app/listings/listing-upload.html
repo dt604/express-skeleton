@@ -41,8 +41,17 @@
 				</form>
 			</div><!-- /.row -->
 
-			<div class="row" id="fileDisplayArea">
-				
+			<div class="row" ng-repeat="img in building.units[aptIDX].imgFiles">
+				<img src="uploads/{{img.filename}}" class="imgTN">
+				<button class="btn btn-danger" 
+					ng-click="deleteUnitImg($index)">Delete</button>
+				<hr>
+			</div>
+
+		
+			
+			<div class="row">
+				<a class="btn btn-primary" ng-href="#/admin/authUser">Save Changes</a>
 			</div>
 		</div>
 

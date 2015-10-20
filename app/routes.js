@@ -357,7 +357,9 @@ module.exports = function(app) {
             }}, function(err) {
                 if(err) console.log(err);
 
-                res.redirect('/#/preview/' + buildID);
+                // res.redirect('/#/preview/' + buildID);
+                res.redirect('/#/listing-upload/' + buildID + '/' +
+                        aptID + '/' + aptIDX);
             });
 
                       
@@ -366,10 +368,50 @@ module.exports = function(app) {
                 {$addToSet: {imgFiles: {$each: images}}}, 
                 function(err, doc){
                     console.log('Upload Successful...');
-                    res.redirect('/#/preview/' + buildID);
+                    //res.redirect('/#/preview/' + buildID);
+                    res.redirect('/#/building-upload/' + buildID);
             });
         }
 
+    });
+
+    // =====================================
+    //Get IMG and Delete ========
+    // =====================================
+
+    //Delete Building Image
+    app.get('/img/:buildingID/:imgIndex?', function(req, res){
+        var buildingID = req.params.buildingID;
+        var idx = req.params.imgIndex;
+
+        Buildings.findOne({'_id' : buildingID}, function(err, doc){
+            var removedFile = doc.imgFiles[idx];
+            doc.imgFiles.splice(idx, 1);
+            doc.save(function(err){
+                if(err){
+                    console.log(err);
+                }else {
+                    res.send(doc);
+                }
+            });
+            
+        });
+    });
+
+    //Delete Unit Image
+    app.get('/deleteImg/:buildID?/:aptIDX?/:imgIDX?', function(req, res){
+        var buildID = req.params.buildID;
+        var aptIDX = req.params.aptIDX;
+        var imgIDX = req.params.imgIDX;
+
+        Buildings.findOne({'_id': buildID}, function(err, doc){
+            doc.units[aptIDX].imgFiles.splice(imgIDX, 1);
+            doc.save(function(err){
+                if(err) console.log(err);
+
+                res.send(doc);
+            });
+        });
     });
 
     // =====================================
