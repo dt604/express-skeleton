@@ -4,7 +4,7 @@
 
 		//Menu Nav
 		$scope.menu = {
-			residential: 'Vacancies',
+			vacancies: 'Vacancies',
 			about: 'About'
 		};
 

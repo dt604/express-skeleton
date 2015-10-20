@@ -15,6 +15,10 @@
 					templateUrl: 'app/browse/commercial.html',
 					controller: 'BrowseCtrl'
 				})
+				.when('/vacancies', {
+					templateUrl: 'app/browse/vacancies.html',
+					controller: 'BrowseCtrl'
+				})
 				.when('/building/:buildID', {
 					templateUrl: 'app/browse/building-details.html',
 					controller: 'BrowseCtrl'
