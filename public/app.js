@@ -1,5 +1,5 @@
 (function(){
-	angular.module('myApp', ['ngRoute', 'angular.filter', 'ui.date', 'ngMap', 'ngMask', 'angularSpinner'])
+	angular.module('myApp', ['ngRoute', 'angular.filter', 'ui.date', 'ngMap', 'ngMask', 'angularSpinner', 'ngAnimate'])
 		.config(function($routeProvider){
 			$routeProvider
 				.when('/', {
