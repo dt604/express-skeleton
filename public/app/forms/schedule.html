@@ -1,0 +1,110 @@
+
+<div ng-controller="BrowseCtrl" id="schedule-form" class="modal fade">
+  <form ng-submit="postSchedule(building.name, user)">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Schedule Viewing</h4>
+      </div>
+      <div class="modal-body">
+
+        <h1>{{ building.name }}</h1>
+        
+        <hr>
+         
+        
+
+          <div class="row">
+            <div class="col-md-6">
+              <h4>
+                Choose a suite
+              </h4>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="aptNum">Available suites</label>
+                <select name="aptNum" ng-model="user.aptNum" class="form-control" required>
+                  <option value="">Pick a suite</option>
+                  <option ng-repeat="unit in building.units" value="{{ unit.aptNum }}">
+                    {{ unit.aptNum }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <hr>
+
+          <div class="row">
+            <div class="col-md-6">
+              <h4>Choose a date and time</h4>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="date">Date</label>
+                      
+                <input class="form-control" type="text" id="dateInp" name="date"
+                  ui-date
+                  ui-date-format="MM d, yy"
+                  ng-model="user.date"
+                  required>
+               <!--  <input type="text" class="form-control" placeholder="10/17/15"> -->
+              </div>
+
+              <div class="form-group">
+                <label for="date">Time of day</label>
+                <select name="timeOfDay" ng-model="user.timeOfDay" class="form-control" required>
+                  <option value="">Pick a time</option>
+                  <option value="Morning">Morning</option>
+                  <option value="Afternoon">Afternoon</option>
+                  <option value="Evening">Evening</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="col-md-6">
+              <h4>Contact Information</h4>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input name="name" class="form-control" type="text" ng-model="user.name" required>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input name="email" type="text" class="form-control" ng-model="user.email" required>
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Phone #</label>
+                <input name="phone" class="form-control" type="text" ng-model="user.phone" required>
+              </div>
+        
+
+
+            </div>
+
+          </div><!-- /.row -->
+
+        
+        
+        <span us-spinner spinner-key="spin-contact"></span>
+
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Schedule Viewing</button>
+      </div>
+      
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+  </form>
+</div><!-- /.modal -->
+
+

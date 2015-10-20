@@ -1,12 +1,12 @@
 (function(){
-	angular.module('myApp', ['ngRoute', 'angular.filter', 'ui.bootstrap', 'ngMap', 'ngMask'])
+	angular.module('myApp', ['ngRoute', 'angular.filter', 'ui.date', 'ngMap', 'ngMask', 'angularSpinner'])
 		.config(function($routeProvider){
 			$routeProvider
 				.when('/', {
 					templateUrl: 'app/main/main.html',
 					controller: 'MainCtrl'
 				})
-				//Browse Residential Listings
+				//Browse Listings
 				.when('/residential', {
 					templateUrl: 'app/browse/residential.html',
 					controller: 'BrowseCtrl'
@@ -64,6 +64,20 @@
 					templateUrl: 'app/listings/building-upload.html',
 					controller: 'ListingsCtrl'
 				})
+				//Application Form
+				.when('/apply/:buildID', {
+					templateUrl: 'app/forms/application.html',
+					controller: 'FormCtrl'
+				})
 				.otherwise({ redirectTo: '/' });
 		});
+
+
+
+
+
+
+
+
+
 }());

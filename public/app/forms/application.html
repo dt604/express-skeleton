@@ -1,0 +1,541 @@
+<div ng-include="'app/components/nav/nav.html'"></div>
+
+<div class="container">
+	<h1>Application</h1>
+	<div class="spacer-80"></div>
+	<form ng-submit="postApplication(user)">
+		<div class="panel panel-default">
+			<div class="panel-body bg-light">
+				<div class="row">
+					<div class="col-md-12 form-title">
+						<H3>1. PREFERENCES</H3>
+						<div class="spacer-80"></div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="building">Building <span class="red">*</span></label>
+							<select ng-change="setBuilding(user.building)" class="form-control" ng-model="user.building" name="building" required>
+								<option value=""></option>
+								<option ng-repeat="building in buildings" value="{{ building.name }}">{{ building.name }}</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="aptNum">Suite # <span class="red">*</span></label>
+							<select name="aptNum" class="form-control" ng-model="user.aptNum" required>
+								<option ng-repeat="unit in building.units | filter: {available: 'yes'}" ng-value="{{unit.aptNum}}">{{unit.aptNum}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="date">Move In Date</label>
+							<input class="form-control" type="text" id="dateInp" name="date"
+			                  ui-date
+			                  ui-date-format="MM d, yy"
+			                  ng-model="user.moveInDay"
+			                  required>
+						</div>
+					</div>
+				</div><!-- /.row -->
+				
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="lease">Lease</label>
+							<input type="text" ng-model="lease" class="form-control" placeholder="1 Year" disabled>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="parking">Parking Required?</label>
+							<select ng-model="user.parking" class="form-control">
+								<option value="yes">Yes</option>
+								<option value="no">No</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="parking">Storage Required?</label>
+							<select ng-model="user.parking" class="form-control">
+								<option value="yes">Yes</option>
+								<option value="no">No</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="parking">Bike Storage?</label>
+							<select ng-model="user.parking" class="form-control">
+								<option value="yes">Yes</option>
+								<option value="no">No</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="parking">Other?</label>
+							<select ng-model="user.parking" class="form-control">
+								<option value="yes">Yes</option>
+								<option value="no">No</option>
+							</select>
+						</div>
+					</div>
+					<!-- <div class="col-md-2">
+						<div class="form-group">
+							<label for="parking">Parking Required?</label>
+							<input type="radio" ng-model="user.parking" value="yes"> Yes
+							<input type="radio" ng-model="user.parking" value="no"> No
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="parking">Parking Required?</label>
+							<input type="radio" ng-model="user.parking" value="yes"> Yes
+							<input type="radio" ng-model="user.parking" value="no"> No
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="parking">Parking Required?</label>
+							<input type="radio" ng-model="user.parking" value="yes"> Yes
+							<input type="radio" ng-model="user.parking" value="no"> No
+						</div>
+					</div> -->
+				</div><!-- /.row -->
+			</div>
+		</div><!-- /.panel (PREFERENCES) -->
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12 form-title">
+						<h3>2. APPLICANT INFORMATION</h3>
+						<div class="spacer-80"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="fName">First Name <span class="red">*</span></label>
+							<input name="fName" type="text" ng-model="user.fName" class="form-control" required>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="mName">Middle Name (Initial)</label>
+							<input type="text" class="form-control" name="mName"
+								ng-model="user.mName">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="lName">Last Name <span class="red">*</span></label>
+							<input name="lName" type="text" ng-model="user.lName" class="form-control" required>
+						</div>
+					</div>
+				</div><!-- /.row -->
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="email">Email Address <span class="red">*</span></label>
+							<input name="email" type="text" ng-model="user.email" class="form-control" required>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="phone">Phone Number <span class="red">*</span></label>
+							<input type="text" class="form-control" name="phone"
+								ng-model="user.phone"
+								required>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="altPhone">Phone Number (Alternative)</label>
+							<input name="altPhone" type="text" ng-model="user.altPhone" class="form-control">
+						</div>
+					</div>
+				</div><!-- /.row -->
+				<div class="row">
+					<div class="col-md-4 form-inline">
+						<div class="form-group">
+							<label for="dob">Date of Birth <span class="red">*</span></label>
+							<input type="text" name="year" class="form-control" placeholder="Year"
+								ng-model="user.dob.year" 
+								required>
+							<select class="form-control" 
+								ng-model="user.dob.month" 
+								required>
+								<option value="">Month</option>
+								<option value="January">January</option>
+								<option value="Febuary">Febuary</option>
+								<option value="March">March</option>
+								<option value="April">April</option>
+								<option value="May">May</option>
+								<option value="June">June</option>
+								<option value="July">July</option>
+								<option value="August">August</option>
+								<option value="September">September</option>
+								<option value="October">October</option>
+								<option value="November">November</option>
+								<option value="December">December</option>
+							</select>
+							<select class="form-control" 
+								ng-model="user.dob.day"
+								required>
+								<option value="">Day</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+								<option value="13">13</option>
+								<option value="14">14</option>
+								<option value="15">15</option>
+								<option value="16">16</option>
+								<option value="17">17</option>
+								<option value="18">18</option>
+								<option value="19">19</option>
+								<option value="20">20</option>
+								<option value="21">21</option>
+								<option value="22">22</option>
+								<option value="23">23</option>
+								<option value="24">24</option>
+								<option value="25">25</option>
+								<option value="26">26</option>
+								<option value="27">27</option>
+								<option value="28">28</option>
+								<option value="29">29</option>
+								<option value="30">30</option>
+								<option value="31">31</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- /.panel (APPLICANT INFO) -->
+
+		<div class="panel panel-default">
+			<div class="panel-body bg-light">
+				<div class="row">
+					<div class="col-md-12 form-title">
+						<h3>3. CURRENT ADDRESS</h3>
+						<div class="spacer-80"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="currAdr">Street Address <span class="red">*</span></label>
+							<input name="currAdr" type="text" class="form-control"
+								ng-model="user.currAdr" 
+								required>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="currAptNum">Suite #</label>
+							<input name="currAptNum" type="text" class="form-control"
+								ng-model="user.currAptNum">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="currCity">City <span class="red">*</span></label>
+							<input type="text" class="form-control" name="currCity"
+								ng-model="user.currCity"
+								required>
+						</div>
+					</div>
+				</div><!-- /.row -->
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="currProvince">Province <span class="red">*</span></label>
+							<input type="text" class="form-control" name="currProvince"
+								ng-model="user.currProvince" 
+								required>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="currPostal">Postal Code <span class="red">*</span></label>
+							<input type="text" class="form-control" name="currPostal"
+								ng-model="user.currPostal" 
+								required>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="currAdrLen">How long at this address? <span class="red">*</span></label>
+							<input type="text" class="form-control" name="currAdrLen"
+								ng-model="user.currAdrLen" 
+								required>
+						</div>
+					</div>
+				</div><!-- /.row -->
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="currRentOwn">Do you own or rent? <span class="red">*</span></label>
+							<input type="checkbox" ng-model="user.currRent" 
+								ng-true-value="'Rent'"
+								ng-false-value=""
+								ng-required="!user.currOwn"> Rent
+							<input type="checkbox" ng-model="user.currOwn" 
+								ng-true-value="'Own'"
+								ng-false-value=""
+								ng-required="!user.currRent"> Own
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- /.panel (CURRENT ADDRESS) -->
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12 form-title">
+						<h3>4. PREVIOUS ADDRESS</h3>
+						<p class="red">Only required if you lived at your current address for less than 2 years.</p>
+						<div class="spacer-80"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="prevAdr">Street Address <span class="red">*</span></label>
+							<input name="prevAdr" type="text" class="form-control"
+								ng-model="user.prevAdr">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="prevAptNum">Suite #</label>
+							<input name="prevAptNum" type="text" class="form-control"
+								ng-model="user.prevAptNum">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="prevCity">City <span class="red">*</span></label>
+							<input type="text" class="form-control" name="prevCity"
+								ng-model="user.prevCity">
+						</div>
+					</div>
+				</div><!-- /.row -->
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="prevProvince">Province <span class="red">*</span></label>
+							<input type="text" class="form-control" name="prevProvince"
+								ng-model="user.prevProvince">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="prevPostal">Postal Code <span class="red">*</span></label>
+							<input type="text" class="form-control" name="prevPostal"
+								ng-model="user.prevPostal">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="prevAdrLen">How long at this address? <span class="red">*</span></label>
+							<input type="text" class="form-control" name="prevAdrLen"
+								ng-model="user.prevAdrLen">
+						</div>
+					</div>
+				</div><!-- /.row -->
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="prevRentOwn">Did you own or rent? <span class="red">*</span></label>
+							<input type="checkbox" ng-model="user.prevRent" 
+								ng-true-value="'Rent'"
+								ng-false-value=""> Rent
+							<input type="checkbox" ng-model="user.prevOwn" 
+								ng-true-value="'Own'"
+								ng-false-value=""> Own
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- /.panel (PREVIOUS ADDRESS) -->
+
+		<div class="panel panel-default">
+			<div class="panel-body bg-light">
+				<div class="row">
+					<div class="col-md-12">
+						<h3>5. FINANCIAL &amp; REFERENCES</h3>
+						<div class="spacer-80"></div>
+					</div>
+				</div><!-- /.row -->
+
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="employment">What is your employment status? <span class="red">*</span></label>
+							<select class="form-control" ng-model="user.employment" required>
+								<option value=""></option>
+								<option value="Employed">Employed</option>
+								<option value="Self Employed">Self Employed</option>
+								<option value="Retired">Retired</option>
+								<option value="Student">Student</option>
+								<option value="Unemployed">Unemployed</option>
+								
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- /.panel (FINANCIAL & REFERENCES) -->
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<h3>6. OCCUPANTS</h3>
+						<div class="spacer-80"></div>
+					</div>
+				</div><!-- /.row -->
+
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="employment">
+								Will other adults and/or minors be occupying the rental unit? 
+							</label>
+							<select class="form-control" ng-model="user.occupants">
+								<option value="yes">Yes</option>
+								<option value="no">No</option>
+								
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- /.panel (OCCUPANTS) -->
+
+		<div class="panel panel-default">
+			<div class="panel-body bg-light">
+				<div class="row">
+					<div class="col-md-12">
+						<h3>7. APPLICANT STATEMENTS AND CONSENT</h3>
+						<div class="spacer-80"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 form-inline">
+						<div class="form-group">
+							<label for="pets">Do you have any pets? <span class="red">*</span></label>
+							<input type="radio" ng-model="user.pets" value="yes"
+								ng-required="!user.pets"> Yes
+							<input type="radio" ng-model="user.pets" value="no"
+								ng-required="!user.pets"> No
+						</div>
+					</div>
+					<div class="col-md-4 form-inline">
+						<div class="form-group">
+							<label for="pets">Are you a smoker? <span class="red">*</span></label>
+							<input type="radio" ng-model="user.smoker" value="yes"
+								ng-required="!user.smoker"> Yes
+							<input type="radio" ng-model="user.smoker" value="no"
+								ng-required="!user.smoker"> No
+						</div>
+					</div>
+					<div class="col-md-4 form-inline">
+						<div class="form-group">
+							<label for="pets">Do you insure your belongings? <span class="red">*</span></label>
+							<input type="radio" ng-model="user.insured" value="yes"
+								ng-required="!user.insured"> Yes
+							<input type="radio" ng-model="user.insured" value="no"
+								ng-required="!user.insured"> No
+						</div>
+					</div>
+				</div><!-- ./row -->
+				
+				<div class="spacer-80"></div>
+
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="referral">How did you hear about us? <span class="red">*</span></label>
+							<select class="form-control" ng-model="user.referral" required>
+								<option value=""></option>
+								<option value="Website">Website</option>
+								<option value="Online">Online</option>
+								<option value="Referral">Referral</option>
+								<option value="Craigslist">Craigslist</option>
+								<option value="Sign/Walk By">Sign/Walk By</option>
+								<option value="Former Resident">Former Resident</option>
+								<option value="Newspaper">Newspaper</option>
+								<option value="Padmapper">Padmapper</option>
+								<option value="Kijiji">Kijiji</option>
+								<option value="Other">Other</option>
+							</select>
+						</div>
+					</div>
+				</div><!-- ./row -->
+
+				<div class="row">
+					<div class="col-md-12">
+						<p>
+							CONSENT: The Applicant consents to DW Properties Ltd. (“DW Properties”) obtaining credit, personal and employment information on the Applicant from one or more consumer reporting agencies and from other sources of such information as determined by DW Properties, for the purpose of DW Properties evaluating this Application for Tenancy. The Applicant authorizes reporting agencies and any other organization or person, including personnel from any government agency, to disclose relevant information about the Applicant to DW Properties. If this Application for Tenancy is accepted, the Applicant understands that the above information may also be used and disclosed for the purpose of responding to emergencies, ensuring the orderly management of the tenancy and complying with legal requirements. For more information, please refer to the Personal Information Protection Act (British Columbia).
+
+							For greater certainty, this Application does not form a Tenancy. Subject to DW Properties’s review of this Application for Tenancy being satisfactory to DW Properties in its absolute discretion, and subject to the availability of a mutually acceptable unit, DW Properties and the Applicant will enter into a Residential Tenancy Agreement.
+						</p>
+					</div>
+				</div><!-- /.row -->
+				
+				<div class="spacer-40"></div>
+
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							
+							<input type="checkbox" ng-model="user.agree"
+								ng-true-value="'AGREE'"
+								ng-false-value=""
+								required> Agree <span class="red">*</span>
+						</div>
+					</div>
+				</div><!-- /.row -->
+
+				<div class="spacer-40"></div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="comment">Leave a comment</label>
+							<textarea class="form-control" ng-model="user.comment" rows="6"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- /.panel (APPLICANT CONSENT) -->
+
+		<!-- Submit Form -->
+		<div class="row">
+			<div class="col-md-6 pull-right text-right">
+				<button class="btn btn-danger btn-lg">Cancel</button>
+				<button class="btn btn-primary btn-lg">Submit Application</button>
+			</div>
+		</div>
+	</form>
+</div>
+<span us-spinner spinner-key="spinner-1"></span>
+<footer></footer>

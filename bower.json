@@ -20,6 +20,7 @@
     "angular-filter": "~0.5.7",
     "ngmap": "~1.13.13",
     "ngMask": "angular-mask#~3.0.16",
-    "angular-bootstrap": "~0.14.1"
+    "angular-spinner": "~0.7.0",
+    "angular-ui-date": "~0.0.8"
   }
 }

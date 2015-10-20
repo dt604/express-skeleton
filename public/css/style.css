@@ -16,6 +16,20 @@ h1,h2,h3{
 	font-weight: 200;
 }
 
+a:focus{
+	outline: none;
+}
+a:hover{
+	text-decoration: none;
+}
+
+.green{
+	color: #5cb85c;
+}
+.red{
+	color: #d9534f;
+}
+
 /*
 Custom Tabs
 */
@@ -53,11 +67,18 @@ Google Map
 ////Form Elements
 //////////////////////////*/
 
-/*
-Filter Bar
-*/
+/*Application Form*/
+.form-inline input{
+	max-width: 40%;
 
+}
+.form-inline select{
+	max-width: 40%;
 
+}
+.bg-light{
+	background: #f0f0f0;
+}
 
 /*
 Drop Photos
@@ -470,4 +491,12 @@ small.bg-default{
 
 .padding{
 	padding: 10px 0;
+}
+
+.error{
+	color: red;
+}
+
+.no-line:hover{
+	text-decoration: none;
 }

@@ -1,24 +1,28 @@
 <div ng-controller="AdminCtrl" id="login" class="modal fade">
+  <form ng-submit="login(user)">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header bg-warning">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Login</h4>
       </div>
       <div class="modal-body">
       	 
-         <form>
+         
            <div class="form-group">
              <label for="email">Email</label>
-             <input class="form-control" type="text" ng-model="user.email">
+             <input name="email" class="form-control" type="text" ng-model="user.email" required>
+             <p class="error" ng-show="emailErr">{{ emailErr }}</p>
            </div>
            <div class="form-group">
              <label for="password">Password</label>
-             <input class="form-control" type="text" ng-model="user.password">
+             <input name="password" class="form-control" type="text" ng-model="user.password" required>
+             <p class="error" ng-show="passErr">{{ passErr }}</p>
            </div>
 
-           <button ng-click="login(user)" class="btn btn-primary">Login</button>
-         </form>
+           <button class="btn btn-warning">Login</button>
+        
+         <span us-spinner spinner-key="spin-login"></span>
       	
       </div>
       <div class="modal-footer">
@@ -26,4 +30,5 @@
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
+   </form>
 </div><!-- /.modal -->

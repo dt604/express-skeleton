@@ -6,16 +6,24 @@
 		  <div class="row">
 		  	<div class="col-md-6">
 
-		  		<img src="/uploads/{{building.imgFiles[0].filename}}" class="img-responsive">
+		  		<img ng-show="building.imgFiles[0]" 
+		  			src="uploads/{{ building.imgFiles[0].filename }}"
+		  			class="img-responsive">
+		  		<img src="assets/img/rental-placeholder.png" 
+		  			class="img-responsive"
+		  			ng-show="!building.imgFiles[0]">
 		  	</div>
 		  	<div class="col-md-6">
 		  		<h2>{{ building.name }}</h2>
 		  		<hr>
-		  		<p>{{ building.address }}<br><b>Community: </b>{{ building.community }}</p>
+		  		<p>{{ building.address }}<br>Community: {{ building.community }}</p>
 		  		<hr>
 		  		<p>Rental office phone: 604.688-8899</p>
-		  		<button class="btn btn-warning btn-sm">Schedule Viewing</button>
-				<button class="btn btn-primary btn-sm">Apply Now</button>
+		  		<button class="btn btn-success btn-sm"
+		  			data-target="#schedule-form" data-toggle="modal">
+		  			Schedule Viewing
+		  		</button>
+				<a ng-href="#/apply/{{ building._id }}" class="btn btn-primary btn-sm">Apply Now</a>
 
 		  	</div>
 		  </div>
@@ -25,6 +33,9 @@
 	<div class="row">
 		
 		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3>Available Units</h3>
+			</div>
 			<div class="panel-body">
 				<table class="table">
 					<thead>
@@ -39,28 +50,31 @@
 							<th>Edit</th>
 						</tr>
 					</thead>
-					<tr ng-repeat="vacancy in building.vacancies">
-						<td>#{{ vacancy.aptNum }}</td>
+
+					<!-- Get 'available' listings -->
+					<tr ng-repeat="unit in building.units | 
+						filter: {available: 'yes'}">
+						<td>#{{ unit.aptNum }}</td>
 						<td>
 							<small class="bg-success"
-								ng-show="vacancy.rentalType.commercial">Commercial
+								ng-show="unit.rentalType.commercial">Commercial
 							</small>
-							<small class="bg-success"
-								ng-show="vacancy.rentalType.residential">Residential
+							<small class="bg-info"
+								ng-show="unit.rentalType.residential">Residential
 							</small>
 						</td>
-						<td>{{ vacancy.bedrooms }} bedrooms</td>
-						<td>${{ vacancy.rentAmt }}</td>
+						<td>{{ unit.bedrooms }} bedrooms</td>
+						<td>${{ unit.rentAmt }}</td>
 						<td>{{ building.community }}</td>
 						<td>Available Now</td>
-						<td>{{ vacancy.ft2 }} ft&sup2;</td>
+						<td>{{ unit.ft2 }} ft&sup2;</td>
 						<td>
-							<span ng-show="!vacancy.imgFiles[0]">No Photos</span>
+							<span ng-show="!unit.imgFiles[0]">No Photos</span>
 
 							<!-- /View Photos -->
 							<a href="" 
 							ng-click="getPhotos(building._id, $index)"
-							ng-show="vacancy.imgFiles[0]"
+							ng-show="unit.imgFiles[0]"
 							>View Photos</a>
 						</td>
 					</tr>
@@ -77,19 +91,19 @@
 				<div class="row">
 					
 					<div class="col-md-3">
-						<h3>Utilities</h3>
+						<h4>Utilities</h4>
 						<ul>
 							<li ng-repeat="util in building.utils">{{util}}</li>
 						</ul>
 					</div>
 					<div class="col-md-3">
-						<h3>Amenities</h3>
+						<h4>Amenities</h4>
 						<ul>
 							<li ng-repeat="amens in building.amens">{{ amens }}</li>
 						</ul>
 					</div>
 					<div class="col-md-6">
-						<h3>Building Description</h3>
+						<h4>Building Description</h4>
 						<p>{{ building.description }}
 						</p>
 					</div>
@@ -98,7 +112,7 @@
 		</div>
 	</div>
 	
-
+	<span us-spinner spinner-key="spinner-1"></span>
 
 
 </div><!-- /.container -->
@@ -107,5 +121,6 @@
 </footer>
 
 <div ng-include="'app/admin/partials/photo-gallery.html'"></div>
-<div ng-include="'app/components/nav/partials/login.html'"></div>
-<div ng-include="'app/components/nav/partials/register.html'"></div>
+<div ng-include="'app/forms/schedule.html'"></div>
+
+

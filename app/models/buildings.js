@@ -24,8 +24,9 @@ var buildingsSchema = mongoose.Schema({
 					feature	    :  	 Boolean, 
 					rentalType  : 	 Object,
 					available	:  	 String,
+					moveInDate  : 	 String,
 					buildingID	: 	 String, //building name
-
+					community 	: 	 String,
 					bedrooms 	: 	 String,
 					ft2	 		: 	 String,
 					rentAmt 	: 	 String,
@@ -37,8 +38,9 @@ var buildingsSchema = mongoose.Schema({
 					feature	 	: 	 Boolean, 
 					rentalType  : 	 Object,
 					available	:  	 String,
+					moveInDate  : 	 String,
 					buildingID	: 	 String, //building name
-
+					community 	: 	 String,
 					bedrooms 	: 	 String,
 					ft2	 		: 	 String,
 					rentAmt 	: 	 String,

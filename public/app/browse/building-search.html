@@ -39,7 +39,12 @@
 									<a class="btn btn-warning"
 										ng-href="#/building/{{building._id}}">Details</a>
 								</div>
-								<img src="uploads/{{ building.imgFiles[0].filename }}" class="img-responsive">
+								<img ng-show="building.imgFiles[0]" 
+						  			src="uploads/{{ building.imgFiles[0].filename }}"
+						  			class="img-responsive">
+						  		<img src="assets/img/rental-placeholder.png" 
+						  			class="img-responsive"
+						  			ng-show="!building.imgFiles[0]">
 							</div>
 							<div class="text-center padding">
 

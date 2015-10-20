@@ -5,9 +5,9 @@
 				<div class="col-md-12">
 					<div class="pull-right">
 						<a class="btn btn-warning btn-sm" ng-href="#/admin">
-							Admin
+							<span class="glyphicon glyphicon-user"> </span> Admin
 						</a>
-						<button ng-show="!signedIn" class="btn btn-primary btn-sm">Apply Now</button>
+						<a ng-href="#/apply/null" ng-show="!signedIn" class="btn btn-primary btn-sm">Apply Now</a>
 						
 					</div>
 				</div>
@@ -34,6 +34,7 @@
 	      
 	      <ul ng-controller="NavCtrl" class="nav navbar-nav navbar-right">
 	        <li ng-repeat="(key, value) in menu"><a ng-click="getTitle(value)" href="#/{{key}}">{{ value }}</a></li>
+	        <li><a href="" data-target="#contact-form" data-toggle="modal">Contact</a></li>
 	      </ul>
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
@@ -102,7 +103,8 @@
 							<th>Unit #</th>
 							<th>Type</th>
 							<th>Bedrooms</th>
-							<th>Monthly Rent</th>
+							<th>Rent</th>
+							<th>Community</th>
 							<th>Availability</th>
 							<th>FT &sup2;</th>
 							<th>Photos</th>
@@ -121,6 +123,7 @@
 							</td>
 							<td>{{ feature.bedrooms }} bedrooms</td>
 							<td>${{ feature.rentAmt }}</td>
+							<td>{{ feature.community }}</td>
 							<td>Available Now</td>
 							<td>{{ feature.ft2 }} ft&sup2;</td>
 							<td>
@@ -131,6 +134,7 @@
 								ng-click="getPhotos(feature.buildingID, $index)" 
 								ng-show="feature.imgFiles[0]"
 								>View Photos</a>
+								<span us-spinner spinner-key="spinner-1"></span>
 							</td>
 							<td><a ng-href="#/building/{{ feature.buildingID }}" class="btn btn-primary btn-sm">Details</a></td>
 						</tr>
@@ -199,7 +203,7 @@
 			</div>
 		</div>
 	</div>
-
+	
 </div>
 
 <footer>
@@ -212,4 +216,4 @@
 
 
 <div ng-include="'app/admin/partials/photo-gallery.html'"></div>
-
+<div ng-include="'app/forms/contact.html'"></div>

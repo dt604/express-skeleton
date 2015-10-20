@@ -1,5 +1,5 @@
 (function(){
-	var ListingsCtrl = function($scope, $routeParams, $location, Listings){
+	var ListingsCtrl = function($scope, $routeParams, $location, Listings, usSpinnerService){
 
 		init();
 
@@ -14,10 +14,13 @@
 			})
 		}
 		
+
 		if($routeParams.buildID){
+			
 			var buildID = $routeParams.buildID;
 
 			Listings.getBuilding(buildID).success(function(response){
+				//usSpinnerService.stop('spinner-1');
 				if($routeParams.aptID && $routeParams.aptIDX){
 					//get aptID for image upload
 					$scope.aptID = $routeParams.aptID;
@@ -29,8 +32,18 @@
 			});
 		}
 
+		//Get Availability
+		$scope.getAvailable = function(avail){
+			if(avail == 'yes'){
+				$scope.listing.available = 'yes';
+			}else{
+				$scope.listing.available = false;
+			}
+		};
+
 		//Post Building
 		$scope.postBuilding = function(building){
+			usSpinnerService.spin('spinner-1');
 
 			if(building.streetNum && building.streetName && building.city){
 		  		
@@ -43,6 +56,7 @@
 		  				$scope.building.lng = results[0].geometry.location.lng();
 
 		  				Listings.postBuilding(building).success(function(response){
+		  					usSpinnerService.stop('spinner-1');
 							$location.path('/building-upload/' + response._id);
 						});
 		  			}
@@ -57,8 +71,10 @@
 		};
 		//Post Listing
 		$scope.postListing = function(listing){
+			usSpinnerService.spin('spinner-1');
 			Listings.postListing(listing).success(function(response){
-				$location.path('/admin');
+				usSpinnerService.stop('spinner-1');
+				$location.path('/admin/authUser');
 			});
 		};
 
@@ -112,7 +128,8 @@
 
 		//Upload Image
 		$('#imgInp').change(function(){
-			readURL(this);
+			usSpinnerService.spin('spinner-1');
+			//readURL(this);
 			$('#imgUpload').submit();
 		});
 

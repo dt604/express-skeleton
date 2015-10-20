@@ -1,25 +1,40 @@
+<!-- NAV Begin -->
+	<nav class="navbar navbar-default">
+	  <div class="container">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#/">DW Rental Properties</a>
+	    </div>
+
+
+	    
+	  </div><!-- /.container-fluid -->
+	</nav>
+<!-- NAV End -->
+
 <div class="spacer-80"></div>
 
 <div class="container">
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
+			<form ng-submit="postBuilding(building)">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3>Post Building</h3>
 				</div>
 				<div class="panel-body">
-					<form>
+					
 						<div class="form-group">
 							<label for="rentalType">Rental Type</label>
-							<input type="checkbox" 
+							<input type="checkbox"
 								ng-model="building.rentalType.residential"
 								ng-true-value="'Residential'"
-								ng-false-value=""> <span class="check-label">Residential</span>
+								ng-false-value=""> Residential
 
 							<input type="checkbox" 
 								ng-model="building.rentalType.commercial"
 								ng-true-value="'Commercial'"
-								ng-false-value="">  <span class="check-label">Commercial</span>
+								ng-false-value="">  Commercial
 						</div><!-- /.form-group (TYPE) -->
 
 						<hr>
@@ -28,11 +43,16 @@
 							<div class="row">
 								<div class="col-md-6">
 									<label for="name">Building Name</label>
-									<input class="form-control" type="text" ng-model="building.name">
+									<input class="form-control" type="text" name="name" 
+										ng-model="building.name"
+										required>
 								</div>
 								<div class="col-md-6">
 									<label for="community">Community</label>
-									<select class="form-control" ng-model="building.community">
+									<select class="form-control" name="community" 
+										ng-model="building.community"
+										required>
+										<option value="">--Select Community--</option>
 										<option value="Vancouver">Vancouver</option>
 										<option value="UBC">UBC</option>
 										<option value="Broadway">West Broadway</option>
@@ -50,26 +70,31 @@
 							<label for="address">Address</label>
 							<div class="row">
 								<div class="col-md-3">
-									<input class="form-control" type="text" 
+									<input class="form-control" type="text" name="streetNum" 
 										ng-model="building.streetNum"
-										placeholder="1234">
+										placeholder="1234"
+										required>
 									<p><small><span>* </sapn>Street Number</small></p>
 								</div>
 								<div class="col-md-4">
 									<input class="form-control" type="text" 
 										ng-model="building.streetName"
-										placeholder="Anywhere Street">
+										placeholder="Anywhere Street"
+										name="streetName"
+										required>
 									<p><small><span>* </span>Street Name</small></p>
 								</div>
 								<div class="col-md-2">
-									<input class="form-control" type="text" 
+									<input class="form-control" type="text" name="postal" 
 										ng-model="building.postal"
 										mask='@9@ 9@9'
 										placeholder="V6V 6V6">
 									<p><small>Postal Code</small></p>
 								</div>
 								<div class="col-md-3">
-									<select id="selectCity" class="form-control" ng-model="building.city">
+									<select id="selectCity" class="form-control" name="city" 
+										ng-model="building.city"
+										required>
 										<option value="">-- Select City --</option>
 										
 										<option value="Burnaby">Burnaby</option>
@@ -157,17 +182,18 @@
 							<label for="description">Description</label>
 							<textarea rows="8" class="form-control" ng-model="building.description"></textarea>
 						</div>
-
-					</form>
+						<span us-spinner spinner-key="spinner-1"></span>
+					
 				</div>
 				<div class="panel-footer clearfix">
 					<div class="pull-right">
-						<button class="btn btn-primary" ng-click="postBuilding(building)">
+						<button type="submit" class="btn btn-primary">
 							Next Step > Add Photos
 						</button>
 					</div>
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 

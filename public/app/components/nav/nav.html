@@ -6,7 +6,8 @@
 					<div class="pull-right">
 						
 						<a class="btn btn-warning btn-sm" href="#/admin/">Admin</a>
-						<button ng-show="!signedIn" class="btn btn-primary btn-sm">Apply Now</button>
+						<a ng-show="!signedIn" class="btn btn-primary btn-sm"
+							ng-href="#/apply/null">Apply Now</a>
 						<button ng-show="signedIn" class="btn btn-primary btn-sm"
 							ng-click="logout()">Logout</button>
 					</div>
@@ -34,6 +35,9 @@
 	      
 	      <ul class="nav navbar-nav navbar-right">
 	        <li ng-repeat="(key, value) in menu"><a ng-click="getTitle(value)" href="#/{{key}}">{{ value }}</a></li>
+	        <li>
+	        	<a href="" data-target="#contact-form" data-toggle="modal">Contact</a>
+	        </li>
 	      </ul>
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
@@ -44,7 +48,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3">
-					<h1>{{pageTitle || defaultTitle }}</h1>
+					<!-- <h1>{{pageTitle || defaultTitle }}</h1> -->
 				</div>
 			</div>
 		</div>
@@ -52,6 +56,8 @@
 </div><!-- Hero/Wrapper End -->
 <div ng-include="'app/components/nav/partials/login.html'"></div>
 <div ng-include="'app/components/nav/partials/register.html'"></div>
+<div ng-include="'app/forms/contact.html'"></div>
+
 
 
 

@@ -22,6 +22,10 @@
 				return $http.get('/available/' + buildID + '/' + aptID + '/' 
 							+ idx + '/' + available);
 			},
+			updateRent: function(buildID, aptID, idx, rent){
+				return $http.get('/updateUnit/' + buildID + '/' + aptID + '/'
+							+ idx + '/' + rent);
+			},
 			postListing: function(listing){
 				return $http.post('/post-listing/' + listing.buildingID + '/' 
 							+ listing.available, listing);

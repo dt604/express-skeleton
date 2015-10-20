@@ -32,9 +32,9 @@
 					<small ng-show="building.rentalType.commercial" class="bg-default">C</small></h3>
 					
 					<div class="controls clearfix">
-						<a ng-href="#/post-listing/{{building._id}}" class="btn btn-warning btn-sm">New Listing</a>
-						<a class="btn btn-primary btn-sm" ng-href="#/preview/{{ building._id }}">Preview</a>
-						<button ng-click="deleteBuilding(building._id)" class="btn btn-danger btn-sm">Delete Building</button>
+						<a ng-href="#/post-listing/{{building._id}}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-plus"> </span> New Listing</a>
+						<a class="btn btn-primary btn-sm" ng-href="#/preview/{{ building._id }}"><span class="glyphicon glyphicon-search"> </span> Preview</a>
+						<button ng-click="deleteBuilding(building._id)" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"> </span> Delete Building</button>
 					</div>
 					
 
@@ -70,36 +70,45 @@
 								</small>
 							</td>
 							<td>{{ unit.bedrooms }} bedroom</td>
-							<td>${{ unit.rentAmt }}</td>
+							<td>
+								<input type="text" ng-model="unit.rentAmt">
+								<button class="btn btn-sm btn-default" ng-click="updateRent(building._id, unit.aptNum, $index, unit.rentAmt)">
+								<span class="glyphicon glyphicon-refresh"> </span> Update</button>
+							</td>
 							<td>{{ building.community }}</td>
 							
 							<td>{{ unit.ft2 }} ft&sup2;</td>
-							<td><a class="pointer" ng-click="available(building._id, unit.aptNum, $index, unit.available)">{{ unit.available }}</a></td>
+
+							<td><a ng-class="{green: unit.available == 'yes'}" class="pointer" ng-click="available(building._id, unit.aptNum, $index, unit.available)">
+							<span ng-show="(unit.available == 'yes')" class="glyphicon glyphicon-ok"> </span>
+							<span ng-show="(unit.available == 'no')" class="glyphicon glyphicon-remove"> </span> {{ unit.available }}</a>
+							</td>
 							<td>
 
 								<!-- /Add Photos -->
-								<a ng-href="#/listing-upload/{{building._id}}/{{unit.aptNum}}/{{$index}}" 
+								<a ng-href="#/listing-upload/{{building._id}}/{{unit._id}}/{{$index}}" 
 									ng-show="!unit.imgFiles[0]">Add Photos</a>
 
 								<!-- /View Photos -->
-								<a class="pointer" 
-								ng-click="getPhotos(building._id, $index)" 
+								<a class="pointer" ng-click="getPhotos(building._id, $index)"
 								ng-show="unit.imgFiles[0]">View Photos</a>
+
 							</td>
 
 							<td>
 								
-								<a class="pointer" ng-click="deleteListing(building._id, unit.aptNum, $index, unit.available)">Remove</a>
+								<a class="pointer red" ng-click="deleteListing(building._id, unit.aptNum, $index, unit.available)"><span class="glyphicon glyphicon-trash"> </span> Remove</a>
 							</td>
 
 						</tr>
-					
+						<span us-spinner spinner-key="spinner-1"></span>
 					</table>
 				</div><!-- /.panel-body -->
 			</div><!-- /.panel -->
 
 			<div class="spacer-80">
-				<a ng-href="#/post-building" class="btn btn-success">New Building</a>
+				<a ng-href="#/post-building" class="btn btn-success">
+				<span class="glyphicon glyphicon-plus"> </span> New Building</a>
 			</div>
 		</div><!-- /.col-md-12 -->
 	</div><!-- /.row -->

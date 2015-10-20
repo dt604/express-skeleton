@@ -3,9 +3,156 @@ var Upload = require('../config/multer');
 var Listings = require('./models/listings');
 var Buildings = require('./models/buildings');
 var Users = require('./models/users');
+var nodemailer = require('nodemailer');
+//transporter
+var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: 'dantran604@gmail.com', // Your email id
+        pass: 'ilovegolf88' // Your password
+    }
+});
 
 
 module.exports = function(app) {
+    // =====================================
+    // Post Applicationo Form w/Nodemailer =
+    // =====================================
+    app.post('/application', function(req, res){
+        //Set Mail Options
+        var user = req.body;
+
+        var mailOptions = {
+            from: req.body.email,
+            to: 'dantran604@gmail.com',
+            subject: 'Application Form Submitted',
+
+            html:
+                '<h2>1. Preferences</h2>' + 
+                '<b>Building: </b>' + user.building + '<br />' +
+                '<b>Unit: </b>#' + user.aptNum + '<br />' +
+                '<b>Move In Day: </b>' + user.moveInDay + '<br />' +
+
+                '<h2>2. Applicant Information</h2>' +
+                '<b>First Name: </b>' + user.fName + '<br />' +
+                '<b>Middle Name: </b>' + user.mName + '<br />' +
+                '<b>Last Name: </b>' + user.lName + '<br />' +
+                '<b>Email: </b>' + user.email + '<br />' + 
+                '<b>Phone: </b>' + user.phone + '<br />' + 
+                '<b>Alternate Phone: </b>' + user.altPhone + '<br />' +
+                '<b>Date of Birth: </b>' + user.dob.day + '/'
+                    + user.dob.month + '/' + user.dob.year + '<br />' +
+
+                '<h2>3. Current Address</h2>' + 
+                '<b>Street Address: </b>' + user.currAdr + '<br />' + 
+                '<b>Suite #: </b>' + user.currAptNum + '<br />' +
+                '<b>City: </b>' + user.currCity + '<br />' +
+                '<b>Province: </b>' + user.currProvince + '<br />' +
+                '<b>Postal Code: </b>' + user.currPostal + '<br />' +
+                '<b>Lived at for: </b>' + user.currAdrLen + '<br />' +
+
+                '<h2>4. Previous Address</h2>' +
+                '<b>Street Address: </b>' + user.prevAdr + '<br />' + 
+                '<b>Suite #: </b>' + user.prevAptNum + '<br />' +
+                '<b>City: </b>' + user.prevCity + '<br />' +
+                '<b>Province: </b>' + user.prevProvince + '<br />' +
+                '<b>Postal Code: </b>' + user.prevPostal + '<br />' +
+                '<b>Lived at for: </b>' + user.prevAdrLen + '<br />' +
+
+                '<h2>5. Financial And References</h2>' +
+                '<b>Employment Status: </b>' + user.employment + '<br />' +
+
+                '<h2>6. Occupants</h2>' +
+                '<b>Other Occupants: </b>' + user.occupants + '<br />' +
+
+                '<h2>7. Applicant Statements And Consent</h2>' +
+                '<b>Pets: </b>' + user.pets + '<br />' +
+                '<b>Smoker: </b>' + user.smoker + '<br />' +
+                '<b>Insured: </b>' + user.insured + '<br />' +
+                '<b>Referral: </b>' + user.referral + '<br />' +
+                '<b>Agree: </b>' + user.agree + '<br />' +
+                '<p><b>Comment: </b>' + user.comment + '</p>'
+
+ 
+
+        }
+
+        //Send Email
+        transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                console.log(error);
+                res.json({yo: 'error'});
+            }else{
+                console.log('Message sent: ' + info.response);
+                res.json({yo: info.response});
+            };
+        });
+    })
+
+    // =====================================
+    // Post Viewing Form w/Nodemailer ======
+    // =====================================
+    app.post('/viewing/:buildName?', function(req, res){
+        var buildName = req.params.buildName;
+
+        var mailOptions = {
+            from: req.body.email, // sender address
+            to: 'dantran604@gmail.com', // list of receivers
+            subject: 'Somebody wants a viewing' , // Subject line
+            // text: 'Name: ' + req.body.name + ' Email: ' + req.body.email + ' Message: ' +
+            //     message //, // plaintext body
+            html: '<b>Name: </b>' + req.body.name + 
+                  '<br /> <b>Email: </b>' + req.body.email +
+                  '<br /> <b>Phone: </b>' + req.body.phone +
+                  '<br /><b>Building: </b>' + buildName +
+                  '<br /><b>Apartment #: </b>' + req.body.aptNum + 
+                  '<br /><b>Date: </b>' + req.body.date + 
+                  '<br /><b>Time: </b>' + req.body.timeOfDay
+                   // You can choose to send an HTML body instead
+        };
+
+        //Send Email
+        transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                console.log(error);
+                res.json({yo: 'error'});
+            }else{
+                console.log('Message sent: ' + info.response);
+                res.json({yo: info.response});
+            };
+        });
+    });
+    
+    // =====================================
+    // Post Contact Form w/Nodemailer ======
+    // =====================================
+    app.post('/contact', function(req, res){
+        
+        var message = req.body.message;
+        var mailOptions = {
+            from: req.body.email, // sender address
+            to: 'dantran604@gmail.com', // list of receivers
+            subject: 'Request For Rental Information', // Subject line
+            // text: 'Name: ' + req.body.name + ' Email: ' + req.body.email + ' Message: ' +
+            //     message //, // plaintext body
+            html: '<b>Name: </b>' + req.body.name + 
+                  '<br> <b>Email: </b>' + req.body.email +
+                  '<p><b>Message:</b> <br>' + req.body.message + '</p>'
+                   // You can choose to send an HTML body instead
+        };
+
+        //Send Email
+        transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                console.log(error);
+                res.json({yo: 'error'});
+            }else{
+                console.log('Message sent: ' + info.response);
+                res.json({yo: info.response});
+            };
+        });
+    });
+
 
     // =====================================
     // Login & Register ========
@@ -25,11 +172,22 @@ module.exports = function(app) {
         var password = req.body.password;
 
         Users.findOne({"email": email}, function(err, doc){
-            if(password == doc.password){
-                res.send(doc)
-            }else{
-                res.send("Wrong password!");
+            if(!doc){
+                return res.send('wrong email');
             }
+            if(password == doc.password){
+                res.send(doc);
+            } else {
+                return res.send('wrong password');
+            }
+            
+
+
+            // if(password == doc.password){
+            //     res.send(doc)
+            // }else{
+            //     res.send("Wrong password!");
+            // }
         });
     });
 
@@ -62,6 +220,24 @@ module.exports = function(app) {
 
         // res.redirect('/#/admin');
 
+    });
+    // =====================================
+    // Update Listing ======================
+    // =====================================
+    app.get('/updateUnit/:buildID?/:aptID?/:idx?/:rent?/', function(req, res){
+        var buildID = req.params.buildID;
+        var aptID = req.params.aptID;
+        var idx = req.params.idx;
+        var rent = req.params.rent;
+
+        Buildings.findById(buildID, function(err, doc){
+            doc.units[idx].rentAmt = rent;
+            doc.save(function(err, doc){
+                if(err) res.send(err);
+
+                res.send(doc);
+            });
+        });
     });
     
     // =====================================
@@ -112,6 +288,13 @@ module.exports = function(app) {
     app.get('/building/:buildID?', function(req, res){
         var buildID = req.params.buildID;
         Buildings.findById(buildID, function(err, doc){
+            res.send(doc);
+        });
+    });
+    //Get Building by Name
+    app.get('/buildByName/:buildID?', function(req, res){
+        var buildID = req.params.buildID;
+        Buildings.findOne({'name': buildID}, function(err, doc){
             res.send(doc);
         });
     });
@@ -168,23 +351,13 @@ module.exports = function(app) {
 
         if(aptID){
 
-            Buildings.findById(buildID, function(err, doc){
-               if(doc.units[aptIDX].available == 'yes'){
-                    Buildings.update({'vacancies.aptNum': aptID}, {'$set': {
-                        'vacancies.$.imgFiles': images
-                    }}, function(err) {
-                        if(err) console.log(err);
 
-                        // res.redirect('/#/preview/' + buildID);
-                    });
-               };
-               Buildings.update({'units.aptNum': aptID}, {'$set': {
-                    'units.$.imgFiles': images
-                }}, function(err) {
-                    if(err) console.log(err);
+            Buildings.update({'units._id': aptID}, {'$set': {
+                'units.$.imgFiles': images
+            }}, function(err) {
+                if(err) console.log(err);
 
-                    res.redirect('/#/preview/' + buildID);
-                });
+                res.redirect('/#/preview/' + buildID);
             });
 
                       

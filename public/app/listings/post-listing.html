@@ -1,27 +1,45 @@
+<!-- NAV Begin -->
+	<nav class="navbar navbar-default">
+	  <div class="container">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#/">DW Rental Properties</a>
+	    </div>
+
+
+	    
+	  </div><!-- /.container-fluid -->
+	</nav>
+<!-- NAV End -->
+
+
 <div class="spacer-80"></div>
 
 <div class="container">
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="panel panel-default">
+			<form ng-submit="postListing(listing)" id="newListing">
 				<div class="panel-heading">
 					<h3>Post Listing</h3>
 				</div>
 				<div class="panel-body">
-					<form id="newListing">
+					
 						<div class="form-group">
 							<div class="row">
 								<div class="col-md-6">
 									<label for="rentalType">Rental Type</label>
-									<input type="checkbox" 
+									<input type="checkbox" name="residential" 
 										ng-model="listing.rentalType.residential"
 										ng-true-value="'Residential'"
-										ng-false-value=""> Residential
+										ng-false-value=""
+										ng-required="!listing.rentalType.commercial"> Residential
 
-									<input type="checkbox" 
+									<input type="checkbox" name="commercial" 
 										ng-model="listing.rentalType.commercial"
 										ng-true-value="'Commercial'"
-										ng-false-value="">  <span class="check-label">Commercial</span>
+										ng-false-value=""
+										ng-required="!listing.rentalType.residential">  Commercial
 								</div>
 								<div class="col-md-6">
 									<label for="feature">Featured Listing</label>
@@ -35,25 +53,59 @@
 
 						<div class="form-group">
 							<label for="available">Available</label>
-							<select name="available" class="form-control" ng-model="listing.available">
+							<select ng-change="getAvailable(listing.available)" 
+								name="available" 
+								class="form-control" 
+								ng-model="listing.available"
+								required>
+								<option value=""></option>
 								<option value="yes">Yes</option>
 								<option value="no">No</option>
 							</select>
 						</div><!-- /.form-group -->
 
+						<div ng-show="listing.available" class="form-group">
+							<label for="date">Move in date</label>
+							<input class="form-control" type="text" id="dateInp" name="date"
+				                  ui-date
+				                  ui-date-format="MM d, yy"
+				                  ng-model="listing.moveInDate"
+				                  >
+						</div>
+
+						<div class="form-group">
+							<label for="community">Community</label>
+							<select class="form-control" 
+								ng-model="listing.community"
+								required>
+								<option value=""></option>
+								<option value="Vancouver">Vancouver</option>
+								<option value="UBC">UBC</option>
+								<option value="Broadway">West Broadway</option>
+								<option value="Kingsway">Kingsway &amp; Joyce</option>
+								<option value="Gastown">Gastown</option>
+								<option value="Downtown">Downtown</option>
+								<option value="Kitsilano">Kitsilano</option>
+							</select>
+						</div><!-- /.form-group -->
+
 						<div class="form-group">
 							<label for="buildingName">Building: </label>
-							<select ng-model="listing.buildingID" class="form-control">
+							<select ng-model="listing.buildingID" class="form-control"
+								required>
+								<option value=""></option>
 								<option ng-repeat="building in buildings" value="{{ building._id }}">
 									{{ building.name }}
 								</option>
 							</select>
-							
+							<span us-spinner spinner-key="spinner-1"></span>
+
 							<input name="buildingID" class="hidden" type="text" ng-model="listing.buildingID">
 						</div><!-- /.form-group -->
 						<div class="form-group">
 							<label for="Bedrooms">Bedrooms</label>
-							<select class="form-control" ng-model="listing.bedrooms">
+							<select class="form-control" ng-model="listing.bedrooms" required>
+								<option value=""></option>
 								<option value="1">1 bedroom</option>
 								<option value="2">2 bedrooms</option>
 								<option value="3">3 bedrooms</option>
@@ -62,22 +114,24 @@
 						</div>
 						<div class="form-group">
 							<label for="aptNum">Apartment #</label>
-							<input name="aptNum" class="form-control" type="text" ng-model="listing.aptNum">
+							<input name="aptNum" class="form-control" type="text" ng-model="listing.aptNum" required>
 						</div><!-- /.form-group -->
 						<div class="form-group">
 							<label for="rentAmt">Rent Amount</label>
-							<input name="rentAmt" class="form-control" type="text" ng-model="listing.rentAmt">
+							<input name="rentAmt" class="form-control" type="text" ng-model="listing.rentAmt" required>
 						</div><!-- /.form-group -->
 						<div class="form-group">
 							<label for="ft2">Square Footage</label>
-							<input name="ft2" class="form-control" type="text" ng-model="listing.ft2">
+							<input name="ft2" class="form-control" type="text" ng-model="listing.ft2" required>
 						</div><!-- /.form-group -->
 
-					</form>
+					
+
 				</div>
 				<div class="panel-footer">
-					<button ng-click="postListing(listing)" class="btn btn-primary">Post Listing</button>
+					<button class="btn btn-primary">Post Listing</button>
 				</div>
+				</form>
 			</div>
 		</div>
 	</div>

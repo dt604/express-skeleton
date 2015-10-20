@@ -4,12 +4,11 @@
 
 		//Menu Nav
 		$scope.menu = {
-			residential: 'Browse Listings',
-			about: 'About',
-			contact: 'Contact'
+			residential: 'Vacancies',
+			about: 'About'
 		};
 
-		$scope.defaultTitle = 'Vancouver Listings';
+		//$scope.defaultTitle = 'Vancouver Listings';
 
 		//Get Page Title
 		$scope.getTitle = function(pageTitle){

@@ -54,7 +54,12 @@
 		<div class="jumbotron">
 		  <div class="row">
 		  	<div class="col-md-6">
-		  		<img src="/uploads/{{building.imgFiles[0].filename}}" class="img-responsive">
+		  		<img ng-show="building.imgFiles[0]" 
+		  			src="uploads/{{ building.imgFiles[0].filename }}"
+		  			class="img-responsive">
+		  		<img src="assets/img/rental-placeholder.png" 
+		  			class="img-responsive"
+		  			ng-show="!building.imgFiles[0]">
 		  	</div>
 		  	<div class="col-md-6">
 		  		<h2>{{building.name}}</h2>
@@ -63,8 +68,9 @@
 		  		<hr>
 		  		<p>Rental office phone: 604.688-8899 <br><a href="info@dwproperties.com">info@dwproperties.com</a></p>
 
-		  		<a ng-href="#/edit-building/{{ building._id }}" class="btn btn-danger btn-sm">Edit Building</a>
-		  		<a ng-href="#/post-listing/{{building._id}}" class="btn btn-primary btn-sm">Add Unit</a> 
+		  		<a ng-href="#/edit-building/{{ building._id }}" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-edit"> </span> Edit Building</a>
+		  		<a ng-href="#/post-listing/{{building._id}}" class="btn btn-primary btn-sm">
+		  		<span class="glyphicon glyphicon-plus"> </span> Add Unit</a> 
 
 		  	</div>
 		  </div>
@@ -88,34 +94,37 @@
 							<th>Edit</th>
 						</tr>
 					</thead>
-					<tr ng-repeat="vacancy in building.vacancies">
-						<td>#{{ vacancy.aptNum }}</td>
+					<tr ng-repeat="unit in building.units | 
+						filter: {available: 'yes'} ">
+						<td>#{{ unit.aptNum }}</td>
 						<td>
 							<small class="bg-success"
-								ng-show="vacancy.rentalType.commercial">Commercial
+								ng-show="unit.rentalType.commercial">Commercial
 							</small>
 							<small class="bg-success"
-								ng-show="vacancy.rentalType.residential">Residential
+								ng-show="unit.rentalType.residential">Residential
 							</small>
 						</td>
-						<td>{{ vacancy.bedrooms }} bedroom</td>
-						<td>${{ vacancy.rentAmt }}</td>
+						<td>{{ unit.bedrooms }} bedroom</td>
+						
+						<td>${{ unit.rentAmt }}</td>
 						<td>{{ building.community }}</td>
 						
-						<td>{{ vacancy.ft2 }} ft&sup2;</td>
+						<td>{{ unit.ft2 }} ft&sup2;</td>
 						<td>
 
 							<!-- /Add Photos -->
-							<a ng-href="#/listing-upload/{{building._id}}/{{vacancy.aptNum}}/{{$index}}" ng-show="!vacancy.imgFiles[0]">Add Photos</a>
+							<a ng-href="#/listing-upload/{{building._id}}/{{unit._id}}/{{$index}}" ng-show="!unit.imgFiles[0]">Add Photos</a>
 
 							<!-- /View Photos -->
 							<a href="" 
 							ng-click="getPhotos(building._id, $index)" 
-							ng-show="vacancy.imgFiles[0]">View Photos</a>
+							ng-show="unit.imgFiles[0]">View Photos</a>
 						</td>
 
 						<td>
-							<a class="btn btn-danger btn-sm" ng-href="#/admin/authUser">Edit</a>
+							<a class="btn btn-danger btn-sm" ng-href="#/admin/authUser">
+							<span class="glyphicon glyphicon-edit"> </span> Edit</a>
 						</td>
 					</tr>
 				
@@ -161,7 +170,7 @@
 	
 	<div class="spacer-40"></div>
 
-
+	<span us-spinner spinner-key="spinner-1"></span>
 
 </div><!-- /.container -->
 
