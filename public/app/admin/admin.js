@@ -84,6 +84,17 @@
 				});
 		}
 
+		//Set Listing Feature 'Yes/'No'
+		$scope.feature = function(buildID, aptID, idx, feature){
+			usSpinnerService.spin('spinner-1');
+			Listings.feature(buildID, aptID, idx, feature).success(function(response){
+				Listings.getBuildings().success(function(response){
+						$scope.buildings = response;
+						$location.path('/admin');
+					});
+			});
+		}
+
 		//Get 'phots' for Photo Gallery modal
 		$scope.getPhotos = function(buildID, index){
 			usSpinnerService.spin('spinner-1');

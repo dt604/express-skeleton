@@ -31,7 +31,7 @@
 			Listings.getBuildings().success(function(response){
 				response.map(function(build, idx, arr){
 					build.units.map(function(apt, idx, arr){
-						if(apt.feature && apt.available){
+						if(apt.feature == 'yes' && apt.available == 'yes'){
 							$scope.featured.push(apt);
 						}
 					});

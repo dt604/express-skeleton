@@ -462,6 +462,41 @@ module.exports = function(app) {
 
     });
 
+    // =====================================
+    // Featured Listing  =======
+    // =====================================
+    
+    app.get('/feature/:buildID?/:aptID?/:idx?/:feature?', function(req, res){
+        var buildID = req.params.buildID;
+        var aptID = req.params.aptID;
+        var idx = req.params.idx;
+        var feature = req.params.feature;
+
+        if(feature == 'yes'){
+            
+            Buildings.findById(buildID, function(err, doc){
+                doc.units[idx].feature = 'no';
+                
+
+                doc.save(function(err){
+                    if(err) console.log(err);
+                });
+                res.send(doc);
+
+            });
+
+        } else {
+            Buildings.findById(buildID, function(err, doc){
+                doc.units[idx].feature = 'yes';
+                doc.save(function(err){
+                    if(err) console.log(err);
+                });
+                res.send(doc);
+            });
+        }
+
+    });
+
 
 
 

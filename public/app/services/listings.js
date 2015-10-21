@@ -22,6 +22,10 @@
 				return $http.get('/available/' + buildID + '/' + aptID + '/' 
 							+ idx + '/' + available);
 			},
+			feature: function(buildID, aptID, idx, feature){
+				return $http.get('/feature/' + buildID + '/' + aptID + '/' 
+							+ idx + '/' + feature);
+			},
 			updateRent: function(buildID, aptID, idx, rent){
 				return $http.get('/updateUnit/' + buildID + '/' + aptID + '/'
 							+ idx + '/' + rent);

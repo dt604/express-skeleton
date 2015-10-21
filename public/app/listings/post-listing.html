@@ -44,7 +44,9 @@
 								<div class="col-md-6">
 									<label for="feature">Featured Listing</label>
 									<input type="checkbox" 
-										ng-model="listing.feature"> Yes
+										ng-model="listing.feature"
+										ng-true-value="'yes'"
+										ng-false-value="'no'"> Yes
 								</div>
 							</div>
 						</div><!-- /.form-group (TYPE) -->
@@ -58,13 +60,12 @@
 								class="form-control" 
 								ng-model="listing.available"
 								required>
-								<option value=""></option>
-								<option value="yes">Yes</option>
-								<option value="no">No</option>
+								<option ng-value="'yes'">Yes</option>
+								<option ng-value="'no'">No</option>
 							</select>
 						</div><!-- /.form-group -->
 
-						<div ng-show="listing.available" class="form-group">
+						<div ng-show="listing.available == 'yes'" class="form-group">
 							<label for="date">Move in date</label>
 							<input class="form-control" type="text" id="dateInp" name="date"
 				                  ui-date

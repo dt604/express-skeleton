@@ -37,7 +37,7 @@
 			if(avail == 'yes'){
 				$scope.listing.available = 'yes';
 			}else{
-				$scope.listing.available = false;
+				$scope.listing.available = 'no';
 			}
 		};
 
@@ -72,10 +72,19 @@
 		//Post Listing
 		$scope.postListing = function(listing){
 			usSpinnerService.spin('spinner-1');
+
+			if(!listing.feature){
+				listing.feature = 'no';
+
+			}
+
 			Listings.postListing(listing).success(function(response){
 				usSpinnerService.stop('spinner-1');
 				$location.path('/admin/authUser');
 			});
+
+
+			
 		};
 
 		//Get Address

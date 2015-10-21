@@ -45,12 +45,13 @@
 						<thead>
 							<tr>
 								<th>Unit #</th>
-								<th>Rental Type</th>
+								<th>Type</th>
 								<th>Bedrooms</th>
-								<th>Monthly Rent</th>
+								<th>Rent</th>
 								<th>Location</th>
 								<th>FT &sup2;</th>
 								<th>Available</th>
+								<th>Featured</th>
 								<th>Photos</th>
 								<th></th>
 
@@ -83,10 +84,17 @@
 							<span ng-show="(unit.available == 'yes')" class="glyphicon glyphicon-ok"> </span>
 							<span ng-show="(unit.available == 'no')" class="glyphicon glyphicon-remove"> </span> {{ unit.available }}</a>
 							</td>
+
+							<td>
+								<a ng-class="{green: unit.feature == 'yes'}" class="pointer" href=""
+									ng-click="feature(building._id, unit.aptNum, $index, unit.feature)">
+									<span ng-show="(unit.feature == 'yes')" class="glyphicon glyphicon-ok"> </span>
+									<span ng-show="(unit.feature == 'no')" class="glyphicon glyphicon-remove"> </span> {{ unit.feature }}
+								</a>
+							</td>
 							<td>
 
-								<!-- /Add Photos -->
-								<!-- <a ng-href="#/listing-upload/{{building._id}}/{{unit._id}}/{{$index}}">Add Photos</a> -->
+							
 
 								<a ng-href="#/listing-upload/{{building._id}}/{{unit._id}}/{{$index}}"
 									class="margin-r-10">
