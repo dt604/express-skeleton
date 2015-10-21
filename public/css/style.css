@@ -63,6 +63,22 @@ Google Map
 	height: 800px;
 }
 
+#map-md{
+	height: 500px;
+	margin-top: 20px;
+	z-index: 99;
+}
+
+.map-overlay{
+	z-index: 100;
+	width: 100%;
+	background:transparent; 
+	position:relative; 
+	height:520px; /* your iframe height */
+	top:520px;  /* your iframe height */
+	margin-top:-520px;  /* your iframe height */
+}
+
 /*//////////////////////////
 ////Form Elements
 //////////////////////////*/
@@ -151,7 +167,7 @@ input.small{
 
 footer{
 	background: #fffffa;
-	margin-top: 80px;
+	margin-top: 40px;
 }
 
 footer ul{

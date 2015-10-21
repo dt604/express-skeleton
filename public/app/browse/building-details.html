@@ -111,8 +111,18 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="row">
+			<div class="map-overlay" onClick="style.pointerEvents='none'"></div>
+			<map ng-cloak id="map-md" center="{{ building.lat }},{{ building.lng }}" zoom="15">
+				<marker position="{{ building.lat }}, {{ building.lng }}"></marker>
+			</map>
+			
+	</div>
 	
 	<span us-spinner spinner-key="spinner-1"></span>
+
+
 
 
 </div><!-- /.container -->
